@@ -40,7 +40,8 @@ function RoomDetail() {
     setData(house.data);
     let owner = await userApi.getInfoOwner(house.data.owner_id);
     setOwner(owner.data);
-    setSaved(currentUser.list_favourite.indexOf(id) !== -1);
+    if (sessionStorage.getItem("tokenRenter"))
+      setSaved(currentUser.list_favourite.indexOf(id) !== -1);
     let cmt = await houseApi.getListComment(id);
     setListComment(cmt.data);
     setLoading(true);
