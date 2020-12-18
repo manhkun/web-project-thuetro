@@ -15,7 +15,6 @@ import houseApi from "../api/houseApi";
 function RoomDetail() {
   const { id } = useParams();
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
 
   const [voteActive, setVoteActive] = useState(5);
   const [curImg, setCurImg] = useState(0);

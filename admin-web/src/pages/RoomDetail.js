@@ -154,13 +154,6 @@ function RoomDetail() {
               }}
             >
               <h3 className="title-room">{data.header}</h3>
-              <Button onClick={handleLikeHouse}>
-                <img
-                  src={saved ? "/icons/checked 1.png" : "/icons/heart 1.png"}
-                  alt=""
-                />
-                <p>{saved ? "Đã lưu" : "Lưu tin"}</p>
-              </Button>
             </div>
             <h3 className="price">{price}</h3>
             <div className="profile-responsive">
@@ -334,51 +327,6 @@ function RoomDetail() {
                 .map((item) => {
                   return <Comment data={item} />;
                 })}
-          <form action="" onSubmit={handleComment}>
-            <FormInput
-              typeInput="textaria"
-              rows="5"
-              placeholder="Viết nhận xét..."
-              minLength="10"
-              onChange={(e) => setComment(e.target.value)}
-            ></FormInput>
-            <div className="center">
-              <div>
-                {[...Array(5)].map((star, i) => {
-                  const ratingValue = i + 1;
-                  return (
-                    <label htmlFor="">
-                      <input
-                        type="radio"
-                        name="rating"
-                        value={ratingValue}
-                        hidden
-                      />
-                      <i
-                        className="fa fa-star fa-2x"
-                        aria-hidden="true"
-                        style={{
-                          color:
-                            ratingValue <= (hover || rating)
-                              ? "#ffc107"
-                              : "#e4e5e9",
-                        }}
-                        onClick={() => setRating(ratingValue)}
-                        onMouseEnter={() => setHover(ratingValue)}
-                        onMouseLeave={() => setHover(null)}
-                      ></i>
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button type="submit">
-                <img src="/icons/send 1.png" alt="" />
-                <p>GỬI</p>
-              </Button>
-            </div>
-          </form>
           <div className="center">
             <Modal
               open={isOpenModalDeny}
