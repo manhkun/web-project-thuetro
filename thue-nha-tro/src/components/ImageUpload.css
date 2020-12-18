@@ -1,0 +1,32 @@
+.image-upload > input {
+  display: none;
+}
+.image-upload .icon {
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid var(--secondPrimaryColor);
+  margin-right: 20px;
+}
+
+.img-container {
+    position: relative;
+    display: inline;
+}
+
+.img-container .close-btn {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -10px;
+    left: 190px;
+    cursor: pointer;
+}
+
+.image-upload {
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 100%;
+}

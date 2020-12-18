@@ -1,0 +1,9 @@
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.or-register {
+    margin-top: 20px;
+}

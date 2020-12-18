@@ -1,0 +1,8 @@
+.university img {
+    object-fit: contain;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    margin-right: 10px;
+}

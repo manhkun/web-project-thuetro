@@ -1,0 +1,51 @@
+footer {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20vh;
+}
+
+footer table {
+  width: 60%;
+  text-align: left;
+}
+
+footer table th,
+footer table td {
+  width: 40%;
+  height: 50px;
+}
+
+footer section {
+  opacity: 0.3;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 1000px) {
+  footer table {
+    width: 600px;
+    padding: unset;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  footer table {
+    width: 100%;
+  }
+
+  footer table th {
+    font-size: 0.8rem;
+  }
+
+  footer table td {
+    display: none;
+  }
+
+  footer section {
+    display: none;
+  }
+}

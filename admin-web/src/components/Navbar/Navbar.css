@@ -1,0 +1,175 @@
+.navbar {
+  background-color: #22162b;
+  padding: 0 20%;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}
+
+.navbar .navbar-container {
+  width: 100%;
+}
+
+.navbar-container .status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo img {
+  height: 50px;
+}
+
+.status-bar ul {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.status-bar ul li > :first-child {
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.status-bar .user {
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  position: relative;
+  cursor: pointer;
+}
+
+.search-post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.search-input {
+  width: 70%;
+}
+
+.search-input form {
+  width: 100%;
+  display: flex;
+}
+
+.search-input input[type="text"] {
+  width: 100%;
+  height: 40px;
+  padding: 10px 15px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.search-input button {
+  height: 40px;
+  background-color: #f8c630;
+  padding: 0 15px;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn-noti {
+  position: relative;
+}
+
+.noti-container {
+  position: absolute;
+  left: 50%;
+  background-color: white;
+  width: 30vw;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 2;
+}
+
+.noti-container h3 {
+  padding: 5px;
+}
+
+.noti-container .noti-item {
+  display: flex;
+  font-size: 1rem;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.15);
+  padding: 5px;
+}
+
+.noti-container img {
+  width: 25%;
+  margin-right: 5px;
+}
+.account-container {
+  position: absolute;
+  top: 50px;
+  left: 70%;
+  background-color: white;
+  width: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px;
+}
+
+.account-container .view-profile-alert img {
+  width: 50px;
+  float: left;
+  margin-right: 10px;
+}
+
+.account-container .save-post-alert {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  border-top: 00.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.account-container .save-post-alert img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.account-container .save-post-alert a {
+  color: var(--secondPrimaryColor);
+}
+
+.account-container .logout {
+  margin-top: 20px;
+  padding: 5px 0px;
+  display: flex;
+  align-items: center;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.account-container .logout img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.account-container .logout a {
+  color: var(--secondPrimaryColor);
+}
+
+.account-container .view-profile-alert a {
+  color: var(--forthPrimaryColor);
+}
+
+@media only screen and (max-width: 1020px) {
+  .status-bar ul,
+  .status-bar .user,
+  .post {
+    display: none;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .navbar-logo {
+    width: 100%;
+    text-align: center;
+  }
+}

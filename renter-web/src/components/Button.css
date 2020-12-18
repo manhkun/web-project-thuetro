@@ -1,0 +1,40 @@
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn > * {
+    margin-right: 5px;
+}
+
+.btn--primary {
+    background-color: var(--secondPrimaryColor);
+    color: white;
+}
+
+.btn--medium {
+    padding: 5px;
+    font-size: 1rem;
+}
+
+.btn--large {
+    width: 80%;
+    font-size: 1.3rem;
+}
+
+.btn--yellow {
+    background-color: var(--yellow);
+    color: white;
+}
+
+.btn--xlarge {
+    width: 100%;
+    font-size: 1rem;
+    padding: 5px 0px;
+}

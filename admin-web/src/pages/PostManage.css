@@ -1,0 +1,44 @@
+.profile {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .profile .profile-detail {
+    margin-left: 5px;
+  }
+  
+  .profile .profile-detail .name {
+    font-weight: 700;
+    font-size: 1.4rem;
+  }
+  
+  .profile .profile-detail a {
+    font-size: 0.8rem;
+    color: #00a3ff;
+  }
+  
+  .post-status-nav {
+    margin-top: 5px;
+    padding-left: 20px;
+    display: flex;
+    align-items: flex-end;
+    border-top: 2px solid var(--backgroundColor);
+  }
+  
+  .post-status-nav * {
+    margin-right: 10px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    cursor: pointer;
+    padding-top: 20px;
+    padding-bottom: 3px;
+  }
+  
+  .post-status-nav .active {
+    font-weight: 700;
+    opacity: 1;
+    border-bottom: 3px solid var(--yellow);
+    padding: 0px;
+  }
+  

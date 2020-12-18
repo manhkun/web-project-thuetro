@@ -1,0 +1,62 @@
+.not-active {
+  opacity: 0.4;
+}
+
+.comment {
+  margin-top: 20px;
+}
+
+.comment .profile-comment {
+  display: flex;
+  align-items: center;
+}
+
+.comment .profile-comment img {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.comment .name-star p {
+  font-weight: 700;
+}
+
+.comment .content-comment {
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+
+  padding: 0 10px;
+  margin-top: 5px;
+
+  text-align: justify;
+}
+
+.comment .time-comment {
+  display: flex;
+  align-items: center;
+
+  opacity: 0.4;
+}
+
+.comment .time-comment img {
+  margin-right: 5px;
+}
+
+.star i {
+  color: var(--secondPrimaryColor);
+}
+
+.approval-comment {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 5px;
+}
+
+.approval-comment img {
+  max-width: 30px;
+  max-height: 30px;
+  margin-left: 10px;
+
+  cursor: pointer;
+}

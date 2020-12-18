@@ -1,0 +1,13 @@
+.info-room-item {
+  display: flex;
+  align-items: center;
+}
+
+.info-room-item p {
+  margin-left: 10px;
+}
+
+.info-room-item img {
+  max-width: 32px;
+  max-height: 32px;
+}

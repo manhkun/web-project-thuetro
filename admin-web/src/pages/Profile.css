@@ -1,0 +1,67 @@
+.info-profile-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.main-profile {
+  width: 39%;
+}
+
+.info-profile {
+  width: 59%;
+}
+
+.name-avt {
+  display: flex;
+  align-items: center;
+}
+
+.name-avt .name {
+  margin-left: 10px;
+}
+
+.name-avt .name h3 {
+  margin-bottom: 10px;
+}
+
+.info-details > * {
+  display: flex;
+  margin-bottom: 15px;
+  opacity: 0.6;
+}
+
+.info-details * {
+  margin-right: 5px;
+}
+
+.address-detail {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 1000px) {
+  .profile-page {
+    width: 600px;
+    padding: unset;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .info-profile-container {
+    flex-direction: column;
+  }
+  .main-profile,
+  .info-profile {
+    width: 100%;
+  }
+
+  .name-avt,
+  .info-details {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}

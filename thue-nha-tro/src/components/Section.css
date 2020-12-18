@@ -1,0 +1,32 @@
+.section {
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 10px;
+}
+
+.section--large {
+  width: 100%;
+}
+
+.section--medium {
+  width: 600px;
+}
+
+.section--small {
+  width: 28%;
+  height: 250px;
+}
+
+.section--medium--flex {
+  width: 70%;
+}
+.section--validate {
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .section--medium {
+        width: 100%;
+    }
+}

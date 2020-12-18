@@ -1,0 +1,169 @@
+.info-posted,
+.info-pending,
+.info-denied {
+  display: flex;
+  background-color: white;
+  margin-top: 10px;
+  height: 10rem;
+  padding: 15px;
+}
+
+.info-posted > img,
+.info-pending > img,
+.info-denied > img {
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.info-posted-detail,
+.info-pending-detail,
+.info-denied-detail {
+  margin-left: 10px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  color: #000;
+}
+
+.info-posted-detail p,
+.info-denied-detail p,
+.info-pending-detail p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.info-posted-detail h3 {
+  color: red;
+  font-size: 1.4rem;
+}
+
+.info-denied-detail p {
+  opacity: 0.5;
+  font-size: 1.2rem;
+}
+
+.info-denied-detail .noti-denied {
+  display: flex;
+  color: red;
+}
+
+.info-denied-detail .noti-denied h3 {
+  margin-left: 10px;
+}
+
+.time,
+.location {
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  font-size: 0.8rem;
+}
+
+.time img,
+.location img {
+  max-width: 25px;
+  max-height: 25px;
+}
+
+.info-posted-detail .time img,
+.info-posted-detail .location img {
+  margin-right: 5px;
+}
+
+.option-posted,
+.option-pending {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3px;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.option-posted .delete-posted,
+.option-posted .extends-posted,
+.option-pending .delete-pending,
+.option-pending .edit-pending {
+  display: flex;
+  width: 49.8%;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  opacity: 0.75;
+}
+
+.option-posted .delete-posted *,
+.option-posted .extends-posted *,
+.option-pending .delete-pending *,
+.option-pending .edit-pending * {
+  cursor: pointer;
+}
+
+.option-posted .delete-posted img,
+.option-posted .extends-posted img {
+  margin-right: 5px;
+}
+
+.option-pending img {
+  width: 30px;
+}
+
+.option-pending a {
+  color: black;
+}
+
+.option-item__container {
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #fff;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.option-item img {
+  max-width: 30px;
+  max-height: 30px;
+  margin-right: 10px;
+}
+
+.option-btn__2 {
+  width: 50%;
+
+  border-top: 0.5px solid #ccc;
+}
+
+.option-btn__2:first-child {
+  border-right: 0.5px solid #ccc;
+}
+
+.option-btn__1 {
+  width: 100%;
+
+  border-top: 0.5px solid #ccc;
+}
+
+@media only screen and (max-width: 600px) {
+  .post-status-nav {
+    font-size: 0.7rem;
+  }
+  .noti-denied img {
+    width: 10px;
+  }
+
+  .noti-denied h3 {
+    font-size: 0.8rem;
+  }
+}

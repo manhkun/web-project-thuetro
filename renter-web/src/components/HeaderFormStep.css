@@ -1,0 +1,45 @@
+.header--form--step {
+  display: flex;
+  background-color: white;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  position: relative;
+  margin-top: 0px;
+  /* z-index: -1; */
+}
+
+.header--form--step::after {
+  content: "";
+  background-color: var(--yellow);
+  height: 3px;
+  position: absolute;
+  top: 0;
+}
+
+.percent-20::after {
+  width: 20%;
+}
+.percent-40::after {
+  width: 40%;
+}
+.percent-60::after {
+  width: 60%;
+}
+.percent-80::after {
+  width: 80%;
+}
+.percent-100::after {
+  width: 100%;
+}
+
+.header--form--step #back--btn {
+  transform: scaleX(-1);
+  width: 20px;
+  cursor: pointer;
+}
+
+.header--form--step h3 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
