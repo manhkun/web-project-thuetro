@@ -76,8 +76,8 @@ function OverView({ formData, navigation }) {
       near_by: formData.near_by.map((item) => item["value"]),
     };
     let dataHouse = { ...formData, ...img };
-    if (sessionStorage.getItem("tokenOwner")) {
-      let token = sessionStorage.getItem("tokenOwner");
+    if (sessionStorage.getItem("tokenAdmin")) {
+      let token = sessionStorage.getItem("tokenAdmin");
       if (id) {
         let res = await houseApi.editHouse(dataHouse, token, id);
         console.log(res);
