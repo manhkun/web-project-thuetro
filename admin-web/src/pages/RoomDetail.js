@@ -339,12 +339,14 @@ function RoomDetail() {
                 onChange={(e) => setReason(e.target.value)}
               ></FormInput>
             </Modal>
-            <Button
-              buttonStyle="btn--yellow"
-              onClick={() => setIsOpenModalDeny(true)}
-            >
-              <p>KHOÁ BÀI ĐĂNG</p>
-            </Button>
+            <div style={{ margin: "10px" }}>
+              <Button
+                buttonStyle="btn--yellow"
+                onClick={() => setIsOpenModalDeny(true)}
+              >
+                <p>KHOÁ BÀI ĐĂNG</p>
+              </Button>
+            </div>
             <p style={{ color: "red" }}>{notiComment}</p>
           </div>
         </Section>

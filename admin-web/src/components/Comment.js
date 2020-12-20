@@ -6,12 +6,12 @@ import "./Comment.css";
 export const Comment = ({ data }) => {
   const handleAccept = async (e) => {
     let res = await houseApi.acceptComment(data.comment_id);
-    console.log(res);
+    window.location.reload();
   };
 
   const handleDelete = async (e) => {
     let res = await houseApi.deleteComment(data.comment_id);
-    console.log(res);
+    window.location.reload();
   };
 
   return (

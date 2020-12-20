@@ -16,7 +16,7 @@ function RoomDetail() {
   const { id } = useParams();
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const [voteActive, setVoteActive] = useState(5);
+  const [voteActive, setVoteActive] = useState(null);
   const [curImg, setCurImg] = useState(0);
   const [data, setData] = useState({});
   const [owner, setOwner] = useState({});

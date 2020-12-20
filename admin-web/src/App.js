@@ -12,6 +12,7 @@ import RoomDetail from "./pages/RoomDetail";
 import NavbarLogin from "./components/Navbar/NavbarLogin";
 import UserManage from "./pages/UserManage";
 import Statistic from "./pages/Statistic";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/user-manage" component={UserManage} />
             <Route path="/profile/:id" component={Profile} />
             <Route path="/statistic" component={Statistic} />
+            <Route path="/chat" component={Chat} />
           </Switch>
         </div>
         <Footer></Footer>

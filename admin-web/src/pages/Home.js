@@ -5,19 +5,7 @@ import CardItem from "../components/CardItem";
 import Section from "../components/Section";
 import University from "../components/University";
 import houseApi from "../api/houseApi";
-
-let price = (data) => {
-  switch (data.unit) {
-    case 0:
-      return data.price + "Đ/Tháng";
-    case 1:
-      return data.price * 3 + "Đ/Quý";
-    case 2:
-      return data.price * 12 + "Đ/Năm";
-    default:
-      return "";
-  }
-};
+import { price } from "../helper/convertPrice";
 
 function Home() {
   const [listHouse, setListHouse] = useState([]);
@@ -25,7 +13,6 @@ function Home() {
 
   useEffect(async () => {
     let res = await houseApi.getAllHouse();
-    console.log(res);
     setListHouse(res.data);
     setLoading(true);
   }, []);
