@@ -21,7 +21,6 @@ function RoomDetail() {
   const [owner, setOwner] = useState({});
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(1);
-  const [hover, setHover] = useState(null);
   const [comment, setComment] = useState("");
   const [notiComment, setNotiComment] = useState("");
   const [saved, setSaved] = useState(false);
@@ -44,8 +43,12 @@ function RoomDetail() {
   useEffect(async () => {
     let house = await houseApi.getInfoHouse(id);
     setData(house.data);
-    let owner = await userApi.getInfoOwner(house.data.owner_id);
-    setOwner(owner.data);
+    try {
+      let owner = await userApi.getInfoOwner(house.data.owner_id);
+      setOwner(owner.data);
+    } catch (error) {
+      console.log(error);
+    }
     let cmt = await houseApi.getListComment(id);
     console.log(cmt);
     setListComment(cmt.data);
@@ -159,9 +162,13 @@ function RoomDetail() {
             <div className="profile-responsive">
               <div className="profile">
                 <img src="/icons/profile 1.png" alt="" />
-                <h4>{owner.owner_full_name}</h4>
+                <h4>{owner ? owner.owner_full_name : "Admin"}</h4>
               </div>
-              <Link to="">Xem trang</Link>
+              {owner ? (
+                <Link to={`/profile/${owner.owner_name}`}>Xem trang</Link>
+              ) : (
+                ""
+              )}
             </div>
             <MoreInfoRoom
               src="/icons/clock 1.png"
@@ -240,18 +247,22 @@ function RoomDetail() {
             <div className="info-renter">
               <div className="profile">
                 <img src="/icons/profile 1.png" alt="" />
-                <p>{owner.owner_full_name}</p>
+                <p>{owner ? owner.owner_full_name : "Admin"}</p>
               </div>
               <div className="center" style={{ marginTop: "10px" }}>
-                <Link
-                  to={`/profile/${owner.owner_name}`}
-                  style={{ width: "100%" }}
-                >
-                  <Button buttonSize="btn--xlarge">
-                    <img src="/icons/user (1) 1.png" alt="" />
-                    <p>Xem trang cá nhân</p>
-                  </Button>
-                </Link>
+                {owner ? (
+                  <Link
+                    to={`/profile/${owner.owner_name}`}
+                    style={{ width: "100%" }}
+                  >
+                    <Button buttonSize="btn--xlarge">
+                      <img src="/icons/user (1) 1.png" alt="" />
+                      <p>Xem trang cá nhân</p>
+                    </Button>
+                  </Link>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="center">
                 <div className="rate">

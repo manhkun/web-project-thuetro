@@ -12,6 +12,7 @@ import PostManage from "./pages/PostManage";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import RoomDetail from "./pages/RoomDetail";
+import Chat from "./pages/Chat";
 import { loadUser } from "./actions/user";
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
             )}
 
             <Route path="/profile/:id" component={Profile} />
-            {/* <Route path="/postManage" component={PostManage} /> */}
+            <Route path="/chat" component={Chat} />
           </Switch>
         </div>
         <Footer></Footer>

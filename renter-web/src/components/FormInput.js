@@ -67,6 +67,7 @@ export const FormInput = ({
           value={value}
           defaultValue={defaultValue}
           onChange={onChange}
+          required={required}
           ref={register}
         />
       );

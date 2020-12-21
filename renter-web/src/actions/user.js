@@ -1,11 +1,9 @@
 import userApi from "../api/userApi";
 
 export const loadUser = () => {
-  const renterID = sessionStorage.getItem("tokenRenter");
   return async (dispatch) => {
     try {
-      const user = await userApi.getInfoRenter(renterID);
-      console.log(user);
+      const user = await userApi.getInfoRenter();
       dispatch(addNewUser(user.data));
     } catch (error) {
       console.log(error);

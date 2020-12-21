@@ -9,6 +9,7 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
+// axiosClient.defaults.headers.common['token'] = 'token';
 axiosClient.interceptors.request.use(async (config) => {
   // handle token
   return config;

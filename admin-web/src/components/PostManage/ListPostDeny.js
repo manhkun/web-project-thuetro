@@ -2,19 +2,7 @@ import React from "react";
 import convertTime from "../../helper/convertTime";
 
 import { PostDeniedItem } from "./PostItem";
-
-let price = (data) => {
-  switch (data.unit) {
-    case 0:
-      return data.price + "Đ/Tháng";
-    case 1:
-      return data.price * 3 + "Đ/Quý";
-    case 2:
-      return data.price * 12 + "Đ/Năm";
-    default:
-      return "";
-  }
-};
+import { price } from "../../helper/convertPrice";
 
 export const ListPostDeny = ({ data }) => {
   console.log(data);

@@ -1,22 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import "./Navbar.css";
 import { Button } from "./Button";
 import { logout } from "../actions/user";
+import userApi from "../api/userApi";
 
 function NavbarOwner({ currentUser }) {
   const [clickNoti, setClickNoti] = useState(false);
   const [clickAccount, setClickAccount] = useState(false);
-  const handleNotiClick = () => setClickNoti(!clickNoti);
+  const [dataNoti, setDataNoti] = useState([]);
+
+  const ws = new WebSocket("ws://localhost:9999/v1/rent-house/notification");
+
+  const handleNotiClick = async () => {
+    setClickNoti(!clickNoti);
+    if (!clickNoti) {
+      let res = await userApi.getNotification();
+      setDataNoti(res.data);
+    }
+  };
   const handleAccountClick = () => setClickAccount(!clickAccount);
   const dispatch = useDispatch();
-  console.log(currentUser);
   const handleLogOut = () => {
     sessionStorage.clear();
     dispatch(logout());
   };
+
+  useEffect(() => {
+    ws.onopen = () => {
+      console.log("Connected");
+      ws.send(sessionStorage.getItem("tokenOwner"));
+    };
+    ws.onmessage = (evt) => {
+      const message = JSON.parse(evt.data);
+      console.log(message);
+    };
+  }, []);
 
   return (
     <>
@@ -40,23 +61,32 @@ function NavbarOwner({ currentUser }) {
                 </Link>
               </li>
               <li>
-                <Link className="btn-noti" onClick={handleNotiClick}>
+                <Link to="/chat">
+                  <img src="/icons/message.png" alt="" />
+                  <p>Tin nhắn</p>
+                </Link>
+              </li>
+              <li>
+                <div className="btn-noti" onClick={handleNotiClick}>
                   <img src="/icons/bell 1.png" alt="" />
                   <p>Thông báo</p>
-                </Link>
+                </div>
                 <div
                   className={
                     clickNoti ? "noti-container" : "noti-container hidden"
                   }
                 >
                   <h3>THÔNG BÁO</h3>
-                  <div className="noti-item">
-                    <img src="/image/nhatro.jpg" alt="" />
-                    <p>
-                      Tin <strong>Nhà trọ giá rẻ</strong> đã được duyệt thành
-                      công
-                    </p>
-                  </div>
+                  {dataNoti.map((item) => {
+                    return (
+                      <NotiItem
+                        src={item.house.image_link[0]}
+                        title={item.house.header}
+                        type={item.type}
+                        houseid={item.house.house_id}
+                      />
+                    );
+                  })}
                 </div>
               </li>
             </ul>
@@ -130,6 +160,17 @@ function UserBtn(props) {
         </div>
       </div>
     </div>
+  );
+}
+
+function NotiItem(props) {
+  return (
+    <Link to={`/room-detail/${props.houseid}`} className="noti-item">
+      <img src={props.src} alt="" />
+      <p>
+        Tin <strong>{props.title}</strong> đã được duyệt thành công
+      </p>
+    </Link>
   );
 }
 

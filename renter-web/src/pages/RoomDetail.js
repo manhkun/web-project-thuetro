@@ -9,8 +9,10 @@ import { FormInput } from "../components/FormInput";
 import { Comment } from "../components/Comment";
 import { MoreInfoRoom } from "../components/MoreInfoRoom";
 import convertTime from "../helper/convertTime";
+import { price } from "../helper/convertPrice";
 import userApi from "../api/userApi";
 import houseApi from "../api/houseApi";
+import Modal from "../components/Modal";
 
 function RoomDetail() {
   const { id } = useParams();
@@ -27,6 +29,9 @@ function RoomDetail() {
   const [notiComment, setNotiComment] = useState("");
   const [saved, setSaved] = useState(false);
   const [listComment, setListComment] = useState([]);
+  const [isOpenModalReport, setIsOpenModalReport] = useState(false);
+  const [reason, setReason] = useState("");
+  const [contentReport, setContentReport] = useState("");
 
   const typeHouse = [
     "Phòng trọ",
@@ -40,27 +45,27 @@ function RoomDetail() {
     setData(house.data);
     let owner = await userApi.getInfoOwner(house.data.owner_id);
     setOwner(owner.data);
-    if (sessionStorage.getItem("tokenRenter"))
+    try {
       setSaved(currentUser.list_favourite.indexOf(id) !== -1);
+    } catch (error) {
+      console.log(error);
+    }
     let cmt = await houseApi.getListComment(id);
     setListComment(cmt.data);
     setLoading(true);
   }, [id]);
 
-  let price = "";
-  if (loading) {
-    switch (data.unit) {
-      case 0:
-        price = data.price + "Đ/Tháng";
-        break;
-      case 1:
-        price = data.price * 3 + "Đ/Quý";
-        break;
-      case 2:
-        price = data.price * 12 + "Đ/Năm";
-        break;
+  const handleReport = async (e) => {
+    e.preventDefault();
+    try {
+      let res = await userApi.reportHouse(id, reason, contentReport);
+      if (res.code === 200)
+        setNotiComment("Báo cáo thành công, cảm ơn bạn đã đóng góp!");
+    } catch (e) {
+      setNotiComment("Báo cáo không thành công, vui lòng thử lại!");
     }
-  }
+    setIsOpenModalReport(false);
+  };
   const handleCurImg = (e, act) => {
     e.preventDefault();
     switch (act) {
@@ -171,7 +176,7 @@ function RoomDetail() {
             </div>
 
             <p>{data.content}</p>
-            <div class="more-info-container">
+            <div className="more-info-container">
               <MoreInfoRoom
                 src="/icons/home (1).png"
                 content={`Loại phòng: ${typeHouse[data.house_type]}`}
@@ -371,7 +376,25 @@ function RoomDetail() {
             </div>
           </form>
           <div className="center">
-            <Button buttonStyle="btn--yellow">
+            <Modal
+              open={isOpenModalReport}
+              onClose={() => setIsOpenModalReport(false)}
+              onClick={handleReport}
+            >
+              Bạn có muốn báo cáo bài viết này ?
+              <FormInput
+                placeholder="Lý do"
+                onChange={(e) => setReason(e.target.value)}
+              ></FormInput>
+              <FormInput
+                placeholder="Nội dung"
+                onChange={(e) => setContentReport(e.target.value)}
+              ></FormInput>
+            </Modal>
+            <Button
+              buttonStyle="btn--yellow"
+              onClick={() => setIsOpenModalReport(true)}
+            >
               <p>BÁO CÁO BÀI ĐĂNG</p>
             </Button>
             <p style={{ color: "red" }}>{notiComment}</p>

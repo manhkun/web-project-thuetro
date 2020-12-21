@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import messageApi from "../api/messageApi";
 import HeaderChat from "../components/Helpers/Chat/HeaderChat";
-import { ListMessage } from "../components/Helpers/Chat/ListMessage";
+import { Message, MyMessage } from "../components/Helpers/Chat/Message";
 import UserChat from "../components/Helpers/Chat/UserChat";
 import "./Chat.css";
 
 function Chat() {
   const [dataUser, setDataUser] = useState([]);
   const [message, setMessage] = useState("");
-  const ws = new WebSocket("ws://localhost:9999/v1/rent-house/chat/admin");
+  const ws = new WebSocket("ws://localhost:9999/v1/rent-house/chat");
   useEffect(() => {
     ws.onopen = () => {
       console.log("Connected");
-      ws.send(sessionStorage.getItem("tokenAdmin"));
+      ws.send(sessionStorage.getItem("tokenOwner"));
     };
     ws.onmessage = (evt) => {
       const messages = JSON.parse(evt.data);
@@ -21,12 +21,12 @@ function Chat() {
     console.log("ws");
     return () => ws.onclose;
   }, []);
-  useEffect(async () => {
-    let res = await messageApi.getListUser();
-    console.log(res.data);
-    if (res.code === 200) setDataUser(res.data);
-    let msg = await messageApi.getMessage();
-  }, []);
+  // useEffect(async () => {
+  //   let res = await messageApi.getListUser();
+  //   console.log(res.data);
+  //   if (res.code === 200) setDataUser(res.data);
+  //   let msg = await messageApi.getMessage();
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +47,20 @@ function Chat() {
         </div>
         <div className="chat-container__content">
           <HeaderChat></HeaderChat>
-          <ListMessage></ListMessage>
+          <div className="chat-container__message">
+            <Message></Message>
+            <Message></Message>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+            <MyMessage></MyMessage>
+          </div>
           <form
             className="chat-container__send"
             action=""

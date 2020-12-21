@@ -8,8 +8,6 @@
   border-bottom: 0.5px solid #ccc;
 
   overflow: auto;
-
-  transition: 200ms ease-out;
 }
 
 .user-chat__container img {
@@ -26,8 +24,4 @@
   text-overflow: ellipsis;
 
   opacity: 0.4;
-}
-
-.user-chat__container:hover {
-  background-color: rgba(65, 105, 225, 0.4);
 }

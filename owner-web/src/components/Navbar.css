@@ -78,6 +78,7 @@
 
 .btn-noti {
   position: relative;
+  cursor: pointer;
 }
 
 .noti-container {
@@ -98,6 +99,15 @@
   font-size: 1rem;
   border-top: 0.5px solid rgba(0, 0, 0, 0.15);
   padding: 5px;
+
+  color: #000;
+}
+
+.noti-item img {
+  width: 100px;
+  height: 70px;
+
+  object-fit: cover;
 }
 
 .noti-container img {

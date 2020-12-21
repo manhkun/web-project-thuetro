@@ -4,6 +4,7 @@ import Modal from "../Modal";
 import houseApi from "../../api/houseApi";
 import { FormInput } from "../FormInput";
 import "./PostItem.css";
+import userApi from "../../api/userApi";
 
 const OptionItem = ({ src, content, onClick }) => {
   return (
@@ -26,6 +27,7 @@ const Item = ({ src, content }) => {
 };
 
 const ItemPost = ({
+  id,
   src,
   title,
   price,
@@ -35,7 +37,7 @@ const ItemPost = ({
   reason,
 }) => {
   return (
-    <div className="post-item__container">
+    <Link to={`/room-detail/${id}`} className="post-item__container">
       <img src={src} alt="" />
       <div className="post-item__item">
         <h4>{title}</h4>
@@ -50,7 +52,7 @@ const ItemPost = ({
           ></Item>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -58,6 +60,7 @@ export const PostedItem = (props) => {
   return (
     <div>
       <ItemPost
+        id={props.id}
         src={props.img}
         title={props.title}
         price={props.price}
@@ -221,6 +224,74 @@ export const PostDeniedItem = (props) => {
             src="/icons/restore.png"
             content="Khôi phục"
             onClick={() => setIsOpenModalRestore(true)}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const PostReportItem = (props) => {
+  const [isOpenModalAccept, setIsOpenModalAccept] = useState(false);
+  const [isOpenModalDeny, setIsOpenModalDeny] = useState(false);
+
+  console.log(props.reportid);
+
+  const handleAccept = async () => {
+    let deny = await houseApi.denyHouse(props.houseid, props.reason);
+    let del = await userApi.deleteReport(props.reportid);
+    if (del.code === 200) window.location.reload();
+  };
+
+  const handleDeny = async () => {
+    let res = await userApi.deleteReport(props.reportid);
+    console.log(res);
+    if (res.code === 200) window.location.reload();
+  };
+  return (
+    <div>
+      <Modal
+        open={isOpenModalAccept}
+        onClose={() => setIsOpenModalAccept(false)}
+        onClick={handleAccept}
+      >
+        Bạn muốn chấp thuận báo cáo này ?
+      </Modal>
+      <Modal
+        open={isOpenModalDeny}
+        onClose={() => setIsOpenModalDeny(false)}
+        onClick={handleDeny}
+      >
+        Bạn muốn từ chối báo cáo này ?
+      </Modal>
+      <ItemPost
+        src={props.img}
+        title={props.title}
+        price={props.price}
+        create_at={props.create_at}
+        location={props.location}
+        expired={props.expired}
+        reason={props.reason}
+      />
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
+        <div className="option-btn__2">
+          <OptionItem
+            src="/icons/Vector.png"
+            content="Chấp nhận"
+            onClick={() => setIsOpenModalAccept(true)}
+          />
+        </div>
+        <div className="option-btn__2">
+          <OptionItem
+            src="/icons/plus 2.png"
+            content="Từ chối"
+            onClick={() => setIsOpenModalDeny(true)}
           />
         </div>
       </div>

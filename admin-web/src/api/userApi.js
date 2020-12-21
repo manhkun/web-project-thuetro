@@ -45,6 +45,15 @@ const userApi = {
     };
     return axiosClient.delete(url, config);
   },
+  deleteReport: (id) => {
+    const url = "/admin/report/?reportID=" + id;
+    let config = {
+      headers: {
+        token: token,
+      },
+    };
+    return axiosClient.delete(url, config);
+  },
 };
 
 export default userApi;

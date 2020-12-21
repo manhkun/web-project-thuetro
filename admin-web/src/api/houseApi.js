@@ -70,6 +70,15 @@ const houseApi = {
     };
     return axiosClient.get(url, config);
   },
+  getReportHouse: () => {
+    const url = "/admin/reports?page=0&length=10&status=0";
+    let config = {
+      headers: {
+        token: token,
+      },
+    };
+    return axiosClient.get(url, config);
+  },
 
   acceptHouse: (id) => {
     const url = "/admin/active-house/?houseID=" + id;

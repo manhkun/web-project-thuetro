@@ -35,6 +35,12 @@ function NavbarOwner() {
                 </Link>
               </li>
               <li>
+                <Link to="/chat">
+                  <img src="/icons/message.png" alt="" />
+                  <p>Tin nhắn</p>
+                </Link>
+              </li>
+              <li>
                 <Link className="btn-noti" onClick={handleNotiClick}>
                   <img src="/icons/bell 1.png" alt="" />
                   <p>Thông báo</p>

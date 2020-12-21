@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./PostManage.css";
 
 import Section from "../components/Section";
@@ -7,32 +6,42 @@ import { ListPosted } from "../components/PostManage/ListPosted";
 import { ListPostDeny } from "../components/PostManage/ListPostDeny";
 import { ListPostPending } from "../components/PostManage/ListPostPending";
 import houseApi from "../api/houseApi";
+import { ListPostReport } from "../components/PostManage/ListPostReport";
 
 function PostManage() {
   const [tabActive, setTabActive] = useState("1");
   const [loading, setLoading] = useState(false);
-  const [activeHouse, setActiveHouse] = useState([]);
+  const [postedHouse, setPostedHouse] = useState([]);
   const [deniedHouse, setDeniedHouse] = useState([]);
   const [inactiveHouse, setInactiveHouse] = useState([]);
+  const [reportHouse, setReportHouse] = useState([]);
 
   useEffect(async () => {
+    let housePosted = await houseApi.getHouseByOwnerID("admin");
     let housePending = await houseApi.getHousePending();
     let houseDenied = await houseApi.getDeniedHouse();
+    let houseReport = await houseApi.getReportHouse();
+    setPostedHouse(housePosted.data);
     setInactiveHouse(housePending.data);
     setDeniedHouse(houseDenied.data);
+    setReportHouse(houseReport.data);
+    console.log(inactiveHouse);
     setLoading(true);
   }, []);
   let tab;
   if (loading) {
     switch (tabActive) {
       case "1":
-        tab = <ListPosted></ListPosted>;
+        tab = <ListPosted data={postedHouse}></ListPosted>;
         break;
       case "2":
         tab = <ListPostDeny data={deniedHouse}></ListPostDeny>;
         break;
       case "3":
         tab = <ListPostPending data={inactiveHouse}></ListPostPending>;
+        break;
+      case "4":
+        tab = <ListPostReport data={reportHouse}></ListPostReport>;
     }
   } else {
     tab = <p>Loading</p>;
@@ -45,7 +54,7 @@ function PostManage() {
             className={`posted ${tabActive === "1" ? "active" : ""}`}
             onClick={() => setTabActive("1")}
           >
-            tin đã đăng<span> ({activeHouse.length})</span>
+            tin đã đăng<span> ({postedHouse.length})</span>
           </div>
           <div
             className={`"reject-post" ${tabActive === "2" ? "active" : ""}`}
@@ -63,7 +72,7 @@ function PostManage() {
             className={`"await-accept" ${tabActive === "4" ? "active" : ""}`}
             onClick={() => setTabActive("4")}
           >
-            tin chờ duyệt<span> ({inactiveHouse.length})</span>
+            tin bị báo cáo<span> ({reportHouse.length})</span>
           </div>
         </div>
       </Section>

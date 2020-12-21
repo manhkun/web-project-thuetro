@@ -1,5 +1,7 @@
 import axiosClient from "./axiosClient";
 
+const token = sessionStorage.getItem("tokenOwner");
+
 const userApi = {
   registerRenter: (renterData) => {
     const url = "/renter/sign-up/";
@@ -26,6 +28,15 @@ const userApi = {
   getInfoOwner: (id) => {
     const url = "/owner/" + id;
     return axiosClient.get(url);
+  },
+  getNotification: () => {
+    const url = "/owner/notification/";
+    let config = {
+      headers: {
+        token: token,
+      },
+    };
+    return axiosClient.get(url, config);
   },
 };
 
