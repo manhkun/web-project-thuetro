@@ -38,7 +38,6 @@ export const Infrastructure = ({ formData, setForm, navigation }) => {
       ),
     }),
     onSubmit: (value) => {
-      console.log(value);
       let infrastructure = {
         air_condition: value.airconditional === "1",
         balcony: value.balcony === "1",

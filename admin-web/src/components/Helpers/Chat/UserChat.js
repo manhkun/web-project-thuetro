@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./UserChat.css";
 
 function UserChat(props) {
   return (
-    <div className="user-chat__container">
+    <Link to={`/chat/${props.id}`} className="user-chat__container">
       <img src="/icons/profile 1.png" alt="" />
       <h4>{props.name}</h4>
       <p className="user-chat__last">
@@ -12,7 +13,7 @@ function UserChat(props) {
         consequuntur incidunt! Necessitatibus laboriosam distinctio delectus
         animi voluptates veniam itaque sit iusto quae!
       </p>
-    </div>
+    </Link>
   );
 }
 

@@ -65,7 +65,6 @@ export const Address = ({ formData, setForm, navigation }) => {
       commune: Yup.string().required("Vui lòng chọn phường/xã/thị trấn!"),
     }),
     onSubmit: (value) => {
-      console.log(value);
       let data = {
         province_code: value.province,
         district_code: value.district,
@@ -73,7 +72,6 @@ export const Address = ({ formData, setForm, navigation }) => {
         near_by: nearby,
         street: value.street,
       };
-      console.log(value);
       setForm({ ...formData, ...data });
       navigation.next();
     },

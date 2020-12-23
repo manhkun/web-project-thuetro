@@ -1,57 +1,121 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import messageApi from "../api/messageApi";
 import HeaderChat from "../components/Helpers/Chat/HeaderChat";
 import { ListMessage } from "../components/Helpers/Chat/ListMessage";
 import UserChat from "../components/Helpers/Chat/UserChat";
 import "./Chat.css";
 
+const ws = new WebSocket("ws://localhost:9999/v1/rent-house/chat/admin");
+
 function Chat() {
-  const [dataUser, setDataUser] = useState([]);
+  const { id } = useParams();
+  const [listUser, setListUser] = useState([]);
   const [message, setMessage] = useState("");
-  const ws = new WebSocket("ws://localhost:9999/v1/rent-house/chat/admin");
+  const [listMessage, setListMessage] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const socket = useRef(null);
+  const [reconnectInterval, setReconnectInterval] = useState(null);
+  const [intervalHandle, setIntervalHandle] = useState(null);
   useEffect(() => {
-    ws.onopen = () => {
-      console.log("Connected");
-      ws.send(sessionStorage.getItem("tokenAdmin"));
-    };
-    ws.onmessage = (evt) => {
-      const messages = JSON.parse(evt.data);
-      console.log(messages);
-    };
-    console.log("ws");
-    return () => ws.onclose;
-  }, []);
-  useEffect(async () => {
-    let res = await messageApi.getListUser();
-    console.log(res.data);
-    if (res.code === 200) setDataUser(res.data);
-    let msg = await messageApi.getMessage();
+    connect();
+
+    socket.current.onopen = onOpen;
+    socket.current.onclose = onClose;
+    socket.current.onmessage = onMessage;
+    socket.current.onerror = onError;
+
+    return () => socket.current.close();
   }, []);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    setReconnectInterval(2000);
+    console.log("set reconnect");
+    return () => window.clearInterval(intervalHandle);
+  }, []);
+
+  useEffect(() => {
+    if (reconnectInterval === null) {
+      window.clearInterval(intervalHandle);
+    } else {
+      setIntervalHandle(
+        window.setInterval(() => {
+          connect();
+          console.log("reconnecting...");
+        }, reconnectInterval)
+      );
+    }
+  }, [reconnectInterval]);
+  function sendMessage(e) {
     e.preventDefault();
     let data = {
       message: message,
       image_link: "",
-      owner_id: "kien1234",
+      owner_id: id,
     };
-    ws.send(JSON.stringify(data));
-  };
+    const temp = JSON.stringify(data);
+    socket.current.send(temp);
+    let newSended = {
+      AdminID: "admin",
+      ImageLink: "",
+      Message: message,
+      OwnerID: id,
+      SendTime: new Date().getTime() / 1000,
+      Type: "admin_message",
+    };
+    setListMessage((prev) => [...prev, newSended]);
+    setMessage("");
+  }
+  function connect() {
+    socket.current = ws;
+    setReconnectInterval(null);
+  }
+
+  function onOpen() {
+    console.log("socket ready state", socket.current.readyState);
+    socket.current.send(sessionStorage.getItem("tokenAdmin"));
+  }
+
+  function onClose() {
+    setReconnectInterval(2000);
+  }
+  function onError(e) {
+    console.log(e);
+  }
+
+  function onMessage(e) {
+    const messages = JSON.parse(e.data);
+    console.log("on message" + message);
+    setListMessage((prev) => [...prev, messages]);
+    console.log(listMessage);
+  }
+  useEffect(async () => {
+    let res = await messageApi.getListUser();
+    if (res.code === 200) setListUser(res.data);
+    let msg = await messageApi.getMessage(id);
+    if (msg.code === 200) {
+      setListMessage(msg.data.messages);
+    }
+    setLoading(true);
+  }, [id]);
+
   return (
     <div>
       <div className="chat-container">
         <div className="chat-container__user">
-          {dataUser.map((item) => {
-            return <UserChat name={item.owner_full_name} />;
+          {listUser.map((item) => {
+            return (
+              <UserChat id={item.owner_name} name={item.owner_full_name} />
+            );
           })}
         </div>
         <div className="chat-container__content">
           <HeaderChat></HeaderChat>
-          <ListMessage></ListMessage>
+          <ListMessage data={listMessage}></ListMessage>
           <form
             className="chat-container__send"
             action=""
-            onSubmit={handleSubmit}
+            onSubmit={sendMessage}
           >
             <label htmlFor="image_send">
               <img
@@ -66,6 +130,7 @@ function Chat() {
               name="message"
               id="message"
               placeholder="Aa"
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
             <button type="submit">

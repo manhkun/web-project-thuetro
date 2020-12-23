@@ -34,7 +34,7 @@ function App() {
             <Route path="/user-manage" component={UserManage} />
             <Route path="/profile/:id" component={Profile} />
             <Route path="/statistic" component={Statistic} />
-            <Route path="/chat" component={Chat} />
+            <Route path="/chat/:id?" component={Chat} />
           </Switch>
         </div>
         <Footer></Footer>

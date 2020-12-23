@@ -4,8 +4,6 @@
 
   overflow: auto;
   margin-bottom: 10px;
-
-  float: left;
 }
 
 .message-chat__content {
@@ -26,8 +24,6 @@
 }
 
 .mymessage-chat__container {
-  float: right;
-
   display: flex;
   justify-content: flex-end;
 

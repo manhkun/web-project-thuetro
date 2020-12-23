@@ -12,7 +12,7 @@ function NavbarOwner({ currentUser }) {
   const [clickAccount, setClickAccount] = useState(false);
   const [dataNoti, setDataNoti] = useState([]);
 
-  const ws = new WebSocket("ws://localhost:9999/v1/rent-house/notification");
+  // const ws = new WebSocket("ws://localhost:9999/v1/rent-house/notification");
 
   const handleNotiClick = async () => {
     setClickNoti(!clickNoti);
@@ -28,16 +28,16 @@ function NavbarOwner({ currentUser }) {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    ws.onopen = () => {
-      console.log("Connected");
-      ws.send(sessionStorage.getItem("tokenOwner"));
-    };
-    ws.onmessage = (evt) => {
-      const message = JSON.parse(evt.data);
-      console.log(message);
-    };
-  }, []);
+  // useEffect(() => {
+  //   ws.onopen = () => {
+  //     console.log("Connected");
+  //     ws.send(sessionStorage.getItem("tokenOwner"));
+  //   };
+  //   ws.onmessage = (evt) => {
+  //     const message = JSON.parse(evt.data);
+  //     console.log(message);
+  //   };
+  // }, []);
 
   return (
     <>

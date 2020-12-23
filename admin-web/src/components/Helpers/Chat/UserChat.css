@@ -9,6 +9,10 @@
 
   overflow: auto;
 
+  display: block;
+
+  color: #000;
+
   transition: 200ms ease-out;
 }
 

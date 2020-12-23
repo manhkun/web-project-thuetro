@@ -97,25 +97,15 @@ export const PostedItem = (props) => {
 export const PostItem = (props) => {
   return (
     <div>
-      <Link className="info-posted" to={`/room-detail/${props.id}`}>
-        <img src={props.img} alt="" />
-        <div className="info-posted-detail">
-          <p>{props.title}</p>
-          <h3>{props.price}</h3>
-          <div className="time">
-            <img src="/icons/clock 1.png" alt="" />
-            <p>{props.time}</p>
-          </div>
-          <div className="location">
-            <img src="/icons/pin 1.png" alt="" />
-            <p>{props.location}</p>
-          </div>
-          <div className="time">
-            <img src="/icons/queue.png" alt="" />
-            <p>{props.expired}</p>
-          </div>
-        </div>
-      </Link>
+      <ItemPost
+        id={props.id}
+        src={props.img}
+        title={props.title}
+        price={props.price}
+        create_at={props.create_at}
+        location={props.location}
+        expired={props.expired}
+      />
     </div>
   );
 };

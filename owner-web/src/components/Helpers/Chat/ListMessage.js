@@ -6,11 +6,11 @@ export const ListMessage = ({ data }) => {
   return (
     <div className="chat-container__message">
       {sortData.map((item, key) => {
-        if (item.Type === "owner_message")
+        if (item.Type === "admin_message")
           return (
             <Message content={item.Message} time={item.SendTime} key={key} />
           );
-        if (item.Type === "admin_message")
+        if (item.Type === "owner_message")
           return (
             <MyMessage content={item.Message} time={item.SendTime} key={key} />
           );

@@ -1,24 +1,25 @@
 import React from "react";
 import "./Message.css";
+import convertTime from "../../../helper/convertTime";
 
-export const Message = () => {
+export const Message = ({ content, time }) => {
   return (
     <div className="message-chat__container">
       <img src="/icons/profile 1.png" alt="" />
       <div className="message-chat__content">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        <span className="message-chat__time">22:32</span>
+        {content}
+        <span className="message-chat__time">{convertTime(time)}</span>
       </div>
     </div>
   );
 };
 
-export const MyMessage = () => {
+export const MyMessage = ({ content, time }) => {
   return (
     <div className="mymessage-chat__container">
       <div className="mymessage-chat__content">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        <span className="message-chat__time">22:32</span>
+        {content}
+        <span className="message-chat__time">{convertTime(time)}</span>
       </div>
     </div>
   );

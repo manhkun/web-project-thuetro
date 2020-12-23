@@ -1,15 +1,9 @@
 import userApi from "../api/userApi";
 
 export const loadUser = () => {
-  const renterID = sessionStorage.getItem("renterID");
   const ownerID = sessionStorage.getItem("ownerID");
-  console.log("Load user action");
   return async (dispatch) => {
     try {
-      if (renterID) {
-        const user = await userApi.getInfoRenter(renterID);
-        dispatch(addNewUser(user.data));
-      }
       if (ownerID) {
         const user = await userApi.getInfoOwner(ownerID);
         dispatch(addNewUser(user.data));

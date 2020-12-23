@@ -112,8 +112,10 @@ export const PostPendingItem = (props) => {
     e.preventDefault();
     let token = sessionStorage.getItem("tokenOwner");
     let res = await houseApi.deleteHouse(props.id, token);
-    setIsOpenModal(false);
-    window.location.reload();
+    if (res.code === 200) {
+      setIsOpenModal(false);
+      window.location.reload();
+    }
   };
   return (
     <div>

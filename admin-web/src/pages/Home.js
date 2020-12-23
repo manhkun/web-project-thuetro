@@ -22,23 +22,12 @@ function Home() {
       <div className="hero-container">
         <img src="image/unnamed.jpg" alt="" />
       </div>
-      <Section title="KHÁM PHÁ" size="40%">
-        <ul className="list-university">
-          <li>
-            <University pathImg="/image/logoDHQG.png"></University>
-          </li>
-          <li>
-            <University pathImg="/image/logoDHQG.png"></University>
-          </li>
-          <li>
-            <University pathImg="/image/logoDHQG.png"></University>
-          </li>
-        </ul>
-      </Section>
+      <Section title="KHÁM PHÁ" size="40%"></Section>
       <Section title="TIN ĐĂNG DÀNH CHO BẠN">
         <div className="grid-container">
           {loading ? (
             listHouse.map((item) => {
+              console.log(item);
               return (
                 <CardItem
                   houseid={item.house_id}
