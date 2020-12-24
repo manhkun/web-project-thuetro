@@ -14,6 +14,12 @@ ul.list-university {
   grid-template-columns: repeat(5, 20%);
 }
 
+.search-address {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media only screen and (max-width: 1500px) {
   .grid-container {
     grid-template-columns: repeat(4, 25%);

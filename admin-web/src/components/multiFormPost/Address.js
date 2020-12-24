@@ -94,7 +94,7 @@ export const Address = ({ formData, setForm, navigation }) => {
               handleSelectedProvince(e);
               handleChange(e);
             }}
-          ></FormInput>
+          />
           <FormInput
             typeInput="select"
             name="district"
@@ -106,7 +106,7 @@ export const Address = ({ formData, setForm, navigation }) => {
               handleSelectedDistrict(e);
               handleChange(e);
             }}
-          ></FormInput>
+          />
           <FormInput
             typeInput="select"
             name="commune"
@@ -117,7 +117,7 @@ export const Address = ({ formData, setForm, navigation }) => {
             onChange={handleChange}
             error={errors.commune}
             touched={touched.commune}
-          ></FormInput>
+          />
           <FormInput
             label="Số nhà, đường/thôn"
             name="street"

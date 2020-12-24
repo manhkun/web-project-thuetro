@@ -1,27 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./PostManage.css";
 
 import Section from "../components/Section";
-import houseApi from "../api/houseApi";
-import { ListUserPending } from "../components/UserManage/ListUserPending";
-import { ListUserActive } from "../components/UserManage/ListUserActive";
-import { ListUserBlocked } from "../components/UserManage/ListUserBlocked";
+import { Chart } from "../components/Chart";
+import statisticApi from "../api/statisticApi";
 
 function Statistic() {
   const [tabActive, setTabActive] = useState("1");
   const [loading, setLoading] = useState(true);
+  const [viewInHour, setViewInHour] = useState([]);
+
+  useEffect(async () => {
+    let views = await statisticApi.viewInHour();
+    Object.keys(views.data).map((key, item) => {
+      console.log(item + " " + key);
+    });
+  });
   let tab;
   if (loading) {
     switch (tabActive) {
       case "1":
-        tab = <ListUserPending />;
+        tab = <Chart />;
         break;
       case "2":
-        tab = <ListUserActive />;
+        // tab = <ListUserActive />;
         break;
       case "3":
-        tab = <ListUserBlocked />;
+      // tab = <ListUserBlocked />;
     }
   } else {
     tab = <p>Loading</p>;

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Section from "../components/Section";
 import { Button } from "../components/Helpers/Button/Button";
 import { PostItem } from "../components/PostManage/PostItem";
+import Modal from "../components/Modal";
 import userApi from "../api/userApi";
 import houseApi from "../api/houseApi";
 import { price } from "../helper/convertPrice";
@@ -15,15 +16,22 @@ function Profile() {
   const [user, setUser] = useState({});
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isOpenModalMessage, setIsOpenModalMessage] = useState(false);
 
   useEffect(async () => {
-    let user = await userApi.getInfoOwner(id);
-    setUser(user.data);
-    let post = await houseApi.getHouseByOwnerID(id);
-    setPost(post.data);
-    setLoading(true);
-  });
-  if (!loading) {
+    try {
+      let user = await userApi.getInfoOwner(id);
+      setUser(user.data);
+      let post = await houseApi.getHouseByOwnerID(id);
+      setPost(post.data);
+      setLoading(true);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  const handleSendMessage = () => {};
+  if (!loading || !user) {
     return <p>Loading</p>;
   } else
     return (
@@ -35,8 +43,17 @@ function Profile() {
               <div className="name-avt">
                 <img src="/icons/profile 1.png" alt="" />
                 <div className="name">
-                  <h3>{user.owner_full_name}</h3>
-                  <Button>Chỉnh sửa</Button>
+                  <h3>{user && user.owner_full_name}</h3>
+                  <Button onClick={() => setIsOpenModalMessage(true)}>
+                    Nhắn tin
+                  </Button>
+                  <Modal
+                    open={isOpenModalMessage}
+                    onClose={() => setIsOpenModalMessage(false)}
+                    onClick={handleSendMessage}
+                  >
+                    Gửi tin nhắn
+                  </Modal>
                 </div>
               </div>
             </Section>

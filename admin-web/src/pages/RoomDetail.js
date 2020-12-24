@@ -92,23 +92,6 @@ function RoomDetail() {
         break;
     }
   };
-  const handleComment = async (e) => {
-    e.preventDefault();
-    try {
-      let res = await houseApi.commentHouse(id, comment, rating);
-      if (res.code === 200)
-        setNotiComment("Bình luận thành công! Đợi quản trị viên xét duyệt.");
-      else setNotiComment("Bình luận bị lỗi, vui lòng thử lại!");
-    } catch (error) {
-      setNotiComment("Bình luận bị lỗi, vui lòng thử lại!");
-    }
-  };
-
-  const handleLikeHouse = async (e) => {
-    e.preventDefault();
-    let res = await houseApi.likeHouse(data.house_id);
-    if (res.code === 200) setSaved(true);
-  };
   if (!loading) {
     return <p>Loading</p>;
   }

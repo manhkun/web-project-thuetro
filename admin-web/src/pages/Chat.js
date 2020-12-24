@@ -17,6 +17,7 @@ function Chat() {
   const socket = useRef(null);
   const [reconnectInterval, setReconnectInterval] = useState(null);
   const [intervalHandle, setIntervalHandle] = useState(null);
+
   useEffect(() => {
     connect();
 
@@ -56,12 +57,12 @@ function Chat() {
     const temp = JSON.stringify(data);
     socket.current.send(temp);
     let newSended = {
-      AdminID: "admin",
-      ImageLink: "",
-      Message: message,
-      OwnerID: id,
-      SendTime: new Date().getTime() / 1000,
-      Type: "admin_message",
+      admin_id: "admin",
+      image_link: "",
+      message: message,
+      owner_id: id,
+      send_time: new Date().getTime() / 1000,
+      type: "admin_message",
     };
     setListMessage((prev) => [...prev, newSended]);
     setMessage("");
@@ -85,7 +86,7 @@ function Chat() {
 
   function onMessage(e) {
     const messages = JSON.parse(e.data);
-    console.log("on message" + message);
+    console.log("on message" + messages);
     setListMessage((prev) => [...prev, messages]);
     console.log(listMessage);
   }

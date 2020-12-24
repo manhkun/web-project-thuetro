@@ -53,11 +53,11 @@ function Chat() {
     const temp = JSON.stringify(data);
     socket.current.send(temp);
     let newSended = {
-      AdminID: "admin",
-      ImageLink: "",
-      Message: message,
-      SendTime: new Date().getTime() / 1000,
-      Type: "owner_message",
+      admin_id: "admin",
+      image_link: "",
+      message: message,
+      send_time: new Date().getTime() / 1000,
+      type: "owner_message",
     };
     setListMessage((prev) => [...prev, newSended]);
     setMessage("");
@@ -80,8 +80,9 @@ function Chat() {
   }
 
   function onMessage(e) {
-    const messages = JSON.parse(e.data);
-    console.log("mess" + message);
+    console.log(JSON.parse(e.data));
+    let messages = JSON.parse(e.data);
+    console.log("mess" + messages);
     setListMessage((prev) => [...prev, messages]);
   }
   useEffect(async () => {

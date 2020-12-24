@@ -3,7 +3,6 @@ import "./Home.css";
 
 import CardItem from "../components/CardItem";
 import Section from "../components/Section";
-import University from "../components/University";
 import houseApi from "../api/houseApi";
 import { price } from "../helper/convertPrice";
 
