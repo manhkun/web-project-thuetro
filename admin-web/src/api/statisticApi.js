@@ -4,7 +4,7 @@ const token = sessionStorage.getItem("tokenAdmin");
 
 const statisticApi = {
   viewInHour: () => {
-    const url = "/statistic/view-in-hour-this-month/";
+    const url = "/statistic/timeline-this-month/";
     let config = {
       headers: {
         token: token,

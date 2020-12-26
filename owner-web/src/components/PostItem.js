@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import houseApi from "../api/houseApi";
 import Modal from "./Modal";
+import { FormInput } from "./FormInput";
 import "./PostItem.css";
 
 const OptionItem = ({ src, content, onClick }) => {
@@ -16,8 +17,36 @@ const OptionItem = ({ src, content, onClick }) => {
 };
 
 export const PostedItem = (props) => {
+  const [isOpenModalRented, setIsOpenModalRented] = useState(false);
+  const [isOpenModalExperied, setIsOpenModalExperied] = useState(false);
+  const [timeExpired, setTimeExpired] = useState(0);
+
+  const handleRented = async () => {};
+
+  const handleExpired = async () => {
+    let res = await houseApi.expiredHouse(props.id, timeExpired);
+    console.log(res);
+  };
   return (
     <div>
+      <Modal
+        open={isOpenModalRented}
+        onClose={() => setIsOpenModalRented(false)}
+        onClick={handleRented}
+      >
+        Bạn có muốn xoá tin này ?
+      </Modal>
+      <Modal
+        open={isOpenModalExperied}
+        onClose={() => setIsOpenModalExperied(false)}
+        onClick={handleExpired}
+      >
+        <FormInput
+          placeholder="Lý do"
+          onChange={(e) => setTimeExpired(e.target.value)}
+        ></FormInput>
+        Bạn có muốn gia hạn tin này ?
+      </Modal>
       <Link className="info-posted" to={`/room-detail/${props.id}`}>
         <img src={props.img} alt="" />
         <div className="info-posted-detail">
@@ -48,14 +77,14 @@ export const PostedItem = (props) => {
           <OptionItem
             src="/icons/private 1.png"
             content="Đã cho thuê"
-            onClick={props.handleBlock}
+            onClick={() => setIsOpenModalRented(true)}
           />
         </div>
         <div className="option-btn__2">
           <OptionItem
             src="/icons/plus 1.png"
             content="Gia hạn"
-            onClick={props.handleBlock}
+            onClick={() => setIsOpenModalExperied(true)}
           />
         </div>
       </div>

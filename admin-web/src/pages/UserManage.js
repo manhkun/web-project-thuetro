@@ -33,8 +33,6 @@ function UserManage() {
       case "2":
         tab = <ListUserActive data={listUserActivated} />;
         break;
-      case "3":
-        tab = <ListUserBlocked />;
     }
   } else {
     tab = <p>Loading</p>;
@@ -54,12 +52,6 @@ function UserManage() {
             onClick={() => setTabActive("2")}
           >
             tài khoản đã duyệt<span>({listUserActivated.length})</span>
-          </div>
-          <div
-            className={`"await-accept" ${tabActive === "3" ? "active" : ""}`}
-            onClick={() => setTabActive("3")}
-          >
-            tài khoản bị khoá<span></span>
           </div>
         </div>
       </Section>

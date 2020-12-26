@@ -1,7 +1,9 @@
 import axiosClient from "./axiosClient";
 
+const token = sessionStorage.getItem("tokenOwner");
+
 const houseApi = {
-  postHouse: (data, token) => {
+  postHouse: (data) => {
     const url = "/owner/house/";
     let config = {
       headers: {
@@ -29,7 +31,7 @@ const houseApi = {
     const url = "/house/";
     return axiosClient.get(url);
   },
-  deleteHouse: (id, token) => {
+  deleteHouse: (id) => {
     const url = `/house/${id}`;
     let config = {
       headers: {
@@ -38,7 +40,7 @@ const houseApi = {
     };
     return axiosClient.delete(url, config);
   },
-  editHouse: (data, token, id) => {
+  editHouse: (data, id) => {
     const url = `/house/${id}`;
     let config = {
       headers: {
@@ -50,6 +52,15 @@ const houseApi = {
   getListComment: (id) => {
     const url = `/house/${id}/comments/`;
     return axiosClient.get(url);
+  },
+  expiredHouse: (id, time) => {
+    const url = `/house/${id}/expired-time?time=${time}`;
+    let config = {
+      headers: {
+        token: token,
+      },
+    };
+    return axiosClient.put(url, {}, config);
   },
 };
 

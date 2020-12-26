@@ -15,17 +15,19 @@ function PostManage() {
   const [deniedHouse, setDeniedHouse] = useState([]);
   const [inactiveHouse, setInactiveHouse] = useState([]);
   const [reportHouse, setReportHouse] = useState([]);
+  const [expiredHouse, setExpiredHouse] = useState([]);
 
   useEffect(async () => {
     let housePosted = await houseApi.getHouseByOwnerID("admin");
     let housePending = await houseApi.getHousePending();
     let houseDenied = await houseApi.getDeniedHouse();
     let houseReport = await houseApi.getReportHouse();
+    let houseExpired = await houseApi.getExperiedHouse();
     setPostedHouse(housePosted.data);
     setInactiveHouse(housePending.data);
     setDeniedHouse(houseDenied.data);
     setReportHouse(houseReport.data);
-    console.log(inactiveHouse);
+    setExpiredHouse(houseExpired.data);
     setLoading(true);
   }, []);
   let tab;
@@ -42,6 +44,10 @@ function PostManage() {
         break;
       case "4":
         tab = <ListPostReport data={reportHouse}></ListPostReport>;
+        break;
+      case "4":
+        tab = <ListPostReport data={reportHouse}></ListPostReport>;
+        break;
     }
   } else {
     tab = <p>Loading</p>;

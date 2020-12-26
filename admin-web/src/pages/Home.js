@@ -34,10 +34,10 @@ function Home() {
 
   useEffect(async () => {
     let res = await houseApi.getAllHouse();
-    console.log(res.data);
-    setListHouse(res.data);
-    console.log(listHouse);
-    setLoading(true);
+    if (res.code === 200) {
+      setListHouse(res.data);
+      setLoading(true);
+    }
   }, []);
 
   return (

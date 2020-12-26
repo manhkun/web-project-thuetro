@@ -5,9 +5,7 @@ import "./Navbar.css";
 import { Button } from "../Helpers/Button/Button";
 
 function NavbarOwner() {
-  const [clickNoti, setClickNoti] = useState(false);
   const [clickAccount, setClickAccount] = useState(false);
-  const handleNotiClick = () => setClickNoti(!clickNoti);
   const handleAccountClick = () => setClickAccount(!clickAccount);
   const handleLogOut = () => {
     sessionStorage.clear();
@@ -39,26 +37,6 @@ function NavbarOwner() {
                   <img src="/icons/message.png" alt="" />
                   <p>Tin nhắn</p>
                 </Link>
-              </li>
-              <li>
-                <Link className="btn-noti" onClick={handleNotiClick}>
-                  <img src="/icons/bell 1.png" alt="" />
-                  <p>Thông báo</p>
-                </Link>
-                <div
-                  className={
-                    clickNoti ? "noti-container" : "noti-container hidden"
-                  }
-                >
-                  <h3>THÔNG BÁO</h3>
-                  <div className="noti-item">
-                    <img src="/image/nhatro.jpg" alt="" />
-                    <p>
-                      Tin <strong>Nhà trọ giá rẻ</strong> đã được duyệt thành
-                      công
-                    </p>
-                  </div>
-                </div>
               </li>
             </ul>
             <UserBtn

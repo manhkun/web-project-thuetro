@@ -6,6 +6,9 @@ import { FormInput } from "../FormInput";
 import "./PostItem.css";
 import userApi from "../../api/userApi";
 
+import convertTime from "../../helper/convertTime";
+import { price } from "../../helper/convertPrice";
+
 const OptionItem = ({ src, content, onClick }) => {
   return (
     <div className="option-item__container">
@@ -44,6 +47,7 @@ const ItemPost = ({
         <h3 style={{ color: "red", fontSize: "1.4rem" }}>{price}</h3>
         <Item src="/icons/clock 1.png" content={create_at} />
         <Item src="/icons/pin 1.png" content={location} />
+        {expired && <Item src="/icons/queue.png" content={expired}></Item>}
 
         {reason && (
           <Item
@@ -56,17 +60,16 @@ const ItemPost = ({
   );
 };
 
-export const PostedItem = (props) => {
+export const PostedItem = ({ data }) => {
   return (
     <div>
       <ItemPost
-        id={props.id}
-        src={props.img}
-        title={props.title}
-        price={props.price}
-        create_at={props.create_at}
-        location={props.location}
-        expired={props.expired}
+        id={data.house_id}
+        src={data.image_link[0]}
+        title={data.header}
+        price={price(data)}
+        create_at={convertTime(data.post_time)}
+        location={`${data.address.street}, ${data.address.commune}, ${data.address.district}, ${data.address.province}`}
       />
       <div
         style={{
@@ -76,18 +79,10 @@ export const PostedItem = (props) => {
         }}
       >
         <div className="option-btn__2">
-          <OptionItem
-            src="/icons/private 1.png"
-            content="Đã cho thuê"
-            onClick={props.handleBlock}
-          />
+          <OptionItem src="/icons/private 1.png" content="Đã cho thuê" />
         </div>
         <div className="option-btn__2">
-          <OptionItem
-            src="/icons/plus 2.png"
-            content="Xoá"
-            onClick={props.handleBlock}
-          />
+          <OptionItem src="/icons/plus 2.png" content="Xoá" />
         </div>
       </div>
     </div>
@@ -110,18 +105,19 @@ export const PostItem = (props) => {
   );
 };
 
-export const PostPendingItem = (props) => {
+export const PostPendingItem = ({ data }) => {
+  console.log(data);
   const [isOpenModalAccept, setIsOpenModalAccept] = useState(false);
   const [isOpenModalDeny, setIsOpenModalDeny] = useState(false);
   const [reason, setReason] = useState("");
 
   const handleAccept = async () => {
-    let res = await houseApi.acceptHouse(props.houseid);
+    let res = await houseApi.acceptHouse(data.house_id);
     if (res.code === 200) window.location.reload();
   };
 
   const handleDeny = async () => {
-    let res = await houseApi.denyHouse(props.houseid, reason);
+    let res = await houseApi.denyHouse(data.house_id, reason);
     if (res.code === 200) window.location.reload();
   };
   return (
@@ -145,12 +141,12 @@ export const PostPendingItem = (props) => {
         ></FormInput>
       </Modal>
       <ItemPost
-        src={props.img}
-        title={props.title}
-        price={props.price}
-        create_at={props.create_at}
-        location={props.location}
-        expired={props.expired}
+        src={data.image_link[0]}
+        title={data.header}
+        price={price(data)}
+        create_at={convertTime(data.post_time)}
+        location={`${data.address.street}, ${data.address.commune}, ${data.address.district}, ${data.address.province}`}
+        expired={convertTime(data.expired_time)}
       />
       <div
         style={{
@@ -178,10 +174,10 @@ export const PostPendingItem = (props) => {
   );
 };
 
-export const PostDeniedItem = (props) => {
+export const PostDeniedItem = ({ data }) => {
   const [isOpenModalRestore, setIsOpenModalRestore] = useState(false);
   const handleRestore = async () => {
-    let res = await houseApi.acceptHouse(props.houseid);
+    let res = await houseApi.acceptHouse(data.house_id);
     if (res.code === 200) window.location.reload();
   };
   return (
@@ -194,13 +190,14 @@ export const PostDeniedItem = (props) => {
         Bạn có muốn khôi phục bài viết này ?
       </Modal>
       <ItemPost
-        src={props.img}
-        title={props.title}
-        price={props.price}
-        create_at={props.create_at}
-        location={props.location}
-        expired={props.expired}
-        reason={props.reason}
+        src={data.image_link[0]}
+        id={data.house_id}
+        src={data.image_link[0]}
+        title={data.header}
+        price={price(data)}
+        create_at={convertTime(data.post_time)}
+        location={`${data.address.street}, ${data.address.commune}, ${data.address.district}, ${data.address.province}`}
+        reason={data.admin_comment}
       />
       <div
         style={{
@@ -221,20 +218,21 @@ export const PostDeniedItem = (props) => {
   );
 };
 
-export const PostReportItem = (props) => {
+export const PostReportItem = ({ data }) => {
   const [isOpenModalAccept, setIsOpenModalAccept] = useState(false);
   const [isOpenModalDeny, setIsOpenModalDeny] = useState(false);
 
-  console.log(props.reportid);
-
   const handleAccept = async () => {
-    let deny = await houseApi.denyHouse(props.houseid, props.reason);
-    let del = await userApi.deleteReport(props.reportid);
+    let deny = await houseApi.denyHouse(
+      data.house.house_id,
+      data.house.admin_comment
+    );
+    let del = await userApi.deleteReport(data.report_id);
     if (del.code === 200) window.location.reload();
   };
 
   const handleDeny = async () => {
-    let res = await userApi.deleteReport(props.reportid);
+    let res = await userApi.deleteReport(data.report_id);
     console.log(res);
     if (res.code === 200) window.location.reload();
   };
@@ -255,13 +253,13 @@ export const PostReportItem = (props) => {
         Bạn muốn từ chối báo cáo này ?
       </Modal>
       <ItemPost
-        src={props.img}
-        title={props.title}
-        price={props.price}
-        create_at={props.create_at}
-        location={props.location}
-        expired={props.expired}
-        reason={props.reason}
+        src={data.house.image_link[0]}
+        title={data.house.header}
+        price={price(data.house)}
+        create_at={convertTime(data.house.post_time)}
+        location={`${data.house.address.street} - ${data.house.address.commune} - ${data.house.address.district} - ${data.house.address.province}`}
+        expired={convertTime(data.house.expired_time)}
+        reason={data.house.admin_comment}
       />
       <div
         style={{

@@ -88,8 +88,23 @@ export const UserPending = (props) => {
 };
 
 export const UserActive = (props) => {
+  const handleDelete = async () => {
+    let res = await userApi.deleteOwner(props.id);
+    console.log(res);
+    if (res.code === 200) {
+      window.location.reload();
+    }
+  };
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   return (
     <div>
+      <Modal
+        open={isOpenModalDelete}
+        onClose={() => setIsOpenModalDelete(false)}
+        onClick={handleDelete}
+      >
+        Bạn có muốn xoá tài khoản này ?
+      </Modal>
       <div className="user-item__container">
         <img src="/icons/profile 1.png" alt="" />
         <div className="item-container__grid">
@@ -113,8 +128,8 @@ export const UserActive = (props) => {
         <div className="option-btn__1">
           <OptionItem
             src="/icons/plus 2.png"
-            content="Khoá tài khoản"
-            onClick={props.handleBlock}
+            content="Xoá tài khoản"
+            onClick={() => setIsOpenModalDelete(true)}
           />
         </div>
       </div>

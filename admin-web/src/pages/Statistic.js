@@ -8,22 +8,48 @@ import statisticApi from "../api/statisticApi";
 function Statistic() {
   const [tabActive, setTabActive] = useState("1");
   const [loading, setLoading] = useState(true);
-  const [viewInHour, setViewInHour] = useState([]);
+  const [viewInHourChart, setViewInHourChart] = useState([]);
+  const [viewInDayChart, setViewInDayChart] = useState([]);
+
+  const viewsInHour = [];
+  const viewsInDay = [];
 
   useEffect(async () => {
     let views = await statisticApi.viewInHour();
-    Object.keys(views.data).map((key, item) => {
-      console.log(item + " " + key);
-    });
-  });
+    if (views.code === 200) {
+      Object.values(views.data).map((item) => {
+        viewsInHour.push(Object.values(item));
+        var viewInDay = Object.values(item).reduce((a, b) => a + b, 0);
+        viewsInDay.push(viewInDay);
+      });
+      var result = viewsInHour.reduce(
+        (r, a) => a.map((b, i) => (r[i] || 0) + b),
+        []
+      );
+      setViewInHourChart(result);
+      setViewInDayChart(viewsInDay);
+    }
+  }, []);
   let tab;
   if (loading) {
     switch (tabActive) {
       case "1":
-        tab = <Chart />;
         break;
       case "2":
-        // tab = <ListUserActive />;
+        tab = (
+          <div>
+            <Chart
+              data={viewInHourChart}
+              xAxis={Array.from(Array(23).keys())}
+              title="Thống kê lượt xem theo giờ trong ngày"
+            />{" "}
+            <Chart
+              data={viewInDayChart}
+              xAxis={Array.from({ length: 30 }, (_, i) => i + 1)}
+              title="Thống kê lượt xem theo ngày trong tháng"
+            ></Chart>
+          </div>
+        );
         break;
       case "3":
       // tab = <ListUserBlocked />;

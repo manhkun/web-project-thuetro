@@ -7,6 +7,7 @@ export const ListUserActive = ({ data }) => {
       {data.map((item) => {
         return (
           <UserActive
+            id={item.owner_name}
             name={item.owner_full_name}
             id_card={item.profile.id_card}
             location={`${item.address.street} - ${item.address.commune} - ${item.address.district} - ${item.address.province}`}

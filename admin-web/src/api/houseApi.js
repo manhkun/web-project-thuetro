@@ -79,6 +79,15 @@ const houseApi = {
     };
     return axiosClient.get(url, config);
   },
+  getExperiedHouse: () => {
+    const url = "/admin/extend-houses/";
+    let config = {
+      headers: {
+        token: token,
+      },
+    };
+    return axiosClient.get(url, config);
+  },
 
   acceptHouse: (id) => {
     const url = "/admin/active-house/?houseID=" + id;

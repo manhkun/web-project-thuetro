@@ -1,62 +1,12 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 
-export const Chart = ({ data }) => {
+export const Chart = ({ data, xAxis, title }) => {
   const value = {
-    labels: [
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15,
-      16,
-      17,
-      18,
-      19,
-      20,
-      21,
-      22,
-      23,
-    ],
+    labels: xAxis,
     datasets: [
       {
-        data: [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19,
-          20,
-          21,
-          22,
-          23,
-        ],
+        data: data,
         borderColor: "#e54f6d",
         label: "Lượt xem",
         fill: true,
@@ -70,7 +20,7 @@ export const Chart = ({ data }) => {
         options={{
           title: {
             display: true,
-            text: "Thống kê lượt xem theo giờ",
+            text: title,
           },
           legend: {
             display: true,

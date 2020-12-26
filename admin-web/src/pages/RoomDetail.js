@@ -20,10 +20,6 @@ function RoomDetail() {
   const [data, setData] = useState({});
   const [owner, setOwner] = useState({});
   const [loading, setLoading] = useState(false);
-  const [rating, setRating] = useState(1);
-  const [comment, setComment] = useState("");
-  const [notiComment, setNotiComment] = useState("");
-  const [saved, setSaved] = useState(false);
   const [listComment, setListComment] = useState([]);
   const [isOpenModalDeny, setIsOpenModalDeny] = useState(false);
   const [reason, setReason] = useState("");
@@ -156,6 +152,12 @@ function RoomDetail() {
             <MoreInfoRoom
               src="/icons/clock 1.png"
               content={`Thời gian đăng: ${convertTime(data.post_time)}`}
+            />
+            <MoreInfoRoom
+              src="/icons/charging-circle 1.png"
+              content={`Tình trạng: ${
+                data.rented ? "Đã cho thuê" : "Chưa cho thuê"
+              }`}
             />
             <div className="location-room">
               <img src="/icons/pin 1.png" alt="" />
@@ -341,7 +343,6 @@ function RoomDetail() {
                 <p>KHOÁ BÀI ĐĂNG</p>
               </Button>
             </div>
-            <p style={{ color: "red" }}>{notiComment}</p>
           </div>
         </Section>
       </div>
