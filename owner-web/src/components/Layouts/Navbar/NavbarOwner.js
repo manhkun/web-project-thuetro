@@ -65,6 +65,7 @@ function NavbarOwner({ currentUser }) {
                 >
                   <h3>THÔNG BÁO</h3>
                   {dataNoti.map((item) => {
+                    console.log(item);
                     return (
                       <NotiItem
                         src={item.house.image_link[0]}
@@ -155,7 +156,10 @@ function NotiItem(props) {
     <Link to={`/room-detail/${props.houseid}`} className="noti-item">
       <img src={props.src} alt="" />
       <p>
-        Tin <strong>{props.title}</strong> đã được duyệt thành công
+        Tin <strong>{props.title}</strong>{" "}
+        {props.type === "activated"
+          ? "đã được duyệt thành công"
+          : "đã bị từ chối"}
       </p>
     </Link>
   );

@@ -11,9 +11,9 @@ const houseApi = {
     const url = `/owner/${id}/houses/`;
     return axiosClient.get(url);
   },
-  getAllHouse: () => {
-    const url = "/house/";
-    return axiosClient.get(url);
+  getAllHouse: (params) => {
+    const url = "/house/page";
+    return axiosClient.get(url, { params });
   },
   getListFavorite: () => {
     const url = "/renter/favorite";

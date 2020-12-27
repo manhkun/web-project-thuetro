@@ -66,10 +66,11 @@ function OwnerInfor({ formData, navigation }) {
           setStatusRegister(
             "Đăng ký thất bại, tài khoản đã tồn tại, vui lòng chọn tài khoản khác !"
           );
-          console.log(statusRegister);
         } else {
-          setStatusRegister("Đăng ký thành công !");
-          console.log(statusRegister);
+          setTimeout(() => {
+            setStatusRegister("Đăng ký thành công !");
+          }, 2000);
+          window.location.href = "/login";
         }
       } catch (error) {
         console.log("Failed to register owner: " + error);

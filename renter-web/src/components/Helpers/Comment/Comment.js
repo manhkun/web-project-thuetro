@@ -20,7 +20,7 @@ export const Comment = ({ data }) => {
         <div className="profile-comment">
           <img src="/icons/profile 1.png" alt="" />
           <div className="name-star">
-            <p>{data.renter_id}</p>
+            <p>{data.renter_name}</p>
             <div className="star">
               {[...Array(data.star)].map((e) => (
                 <i className="fa fa-star" aria-hidden="true"></i>

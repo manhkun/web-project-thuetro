@@ -42,7 +42,6 @@ export const Search = ({ dataSearch, setDataSearch, setListHouse }) => {
 
   useEffect(async () => {
     let res = await houseApi.searchHouse(dataSearch);
-    console.log(res);
     if (res.code === 200) {
       setListHouse(res.data);
     }

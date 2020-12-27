@@ -7,6 +7,7 @@ import Section from "../components/Section";
 import houseApi from "../api/houseApi";
 import { price } from "../helper/convertPrice";
 import { Search } from "../components/Search";
+import { Button } from "../components/Helpers/Button/Button";
 
 function Home() {
   const [listHouse, setListHouse] = useState([]);
@@ -31,6 +32,11 @@ function Home() {
     };
     fetchData();
   }, []);
+
+  const handleLoadMore = async () => {
+    let count = dataSearch.count + 10;
+    setDataSearch({ ...dataSearch, ...{ count: count } });
+  };
 
   return (
     <div>
@@ -64,6 +70,9 @@ function Home() {
           ) : (
             <p>Loading</p>
           )}
+        </div>
+        <div className="center">
+          <Button onClick={handleLoadMore}>Xem thêm</Button>
         </div>
       </Section>
     </div>
