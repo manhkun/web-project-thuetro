@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Layouts/Footer/Footer";
+import Navbar from "./components/Layouts/Navbar/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { Post } from "./pages/Post";
 import PostManage from "./pages/PostManage";
 import Profile from "./pages/Profile";
 import RoomDetail from "./pages/RoomDetail";
-import NavbarLogin from "./components/Navbar/NavbarLogin";
+import NavbarLogin from "./components/Layouts/Navbar/NavbarLogin";
 import UserManage from "./pages/UserManage";
 import Statistic from "./pages/Statistic";
 import Chat from "./pages/Chat";

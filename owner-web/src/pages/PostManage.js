@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import "./PostManage.css";
 
 import Section from "../components/Section";
-import { ListPosted } from "../components/ListPosted";
-import { ListPostDeny } from "../components/ListPostDeny";
-import { ListPostPending } from "../components/ListPostPending";
+import { ListPosted } from "../components/PostCard/ListPosted";
+import { ListPostDeny } from "../components/PostCard/ListPostDeny";
+import { ListPostPending } from "../components/PostCard/ListPostPending";
 import houseApi from "../api/houseApi";
 
 function PostManage({ currentUser }) {

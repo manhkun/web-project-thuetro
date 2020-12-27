@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 
-import CardItem from "../components/CardItem";
+import CardItem from "../components/Helpers/CardItem/CardItem";
 
 import Section from "../components/Section";
 import houseApi from "../api/houseApi";

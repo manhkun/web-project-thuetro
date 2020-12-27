@@ -62,6 +62,10 @@ const houseApi = {
     };
     return axiosClient.put(url, {}, config);
   },
+  searchHouse: (params) => {
+    const url = "/search/page-search-results";
+    return axiosClient.get(url, { params });
+  },
 };
 
 export default houseApi;

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { HeaderFormStep } from "../HeaderFormStep";
 import Section from "../Section";
-import { FormInput } from "../FormInput";
-import { Button } from "../Button";
+import { FormInput } from "../Helpers/FormInput/FormInput";
+import { Button } from "../Helpers/Button/Button";
 import { ImageUpload } from "../ImageUpload";
 import getData from "../../helper/DataToList";
 import houseApi from "../../api/houseApi";

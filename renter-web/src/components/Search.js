@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import getData from "../helper/DataToList";
-import { FormInput } from "../components/FormInput";
+import { FormInput } from "./Helpers/FormInput/FormInput";
 import "./Search.css";
 import houseApi from "../api/houseApi";
 
@@ -14,11 +14,11 @@ export const Search = ({ dataSearch, setDataSearch, setListHouse }) => {
   ];
 
   const priceRange = [
-    { code: "*-1000", name: "Thấp (Nhỏ hơn 1Tr)" },
-    { code: "1000-2000", name: "Trung bình thấp (Từ 1Tr - 2Tr)" },
-    { code: "2000-3500", name: "Trung bình cao (Từ 2tr - 3tr5)" },
-    { code: "3500-5000", name: "Cao (Từ 3tr5 - 5tr)" },
-    { code: "5000-*", name: "Rất cao (Trên 5tr)" },
+    { code: "* - 1000", name: "Thấp (Nhỏ hơn 1Tr)" },
+    { code: "1000 - 2000", name: "Trung bình thấp (Từ 1Tr - 2Tr)" },
+    { code: "2000 - 3500", name: "Trung bình cao (Từ 2tr - 3tr5)" },
+    { code: "3500 - 5000", name: "Cao (Từ 3tr5 - 5tr)" },
+    { code: "5000 - *", name: "Rất cao (Trên 5tr)" },
   ];
 
   const province = getData.province();
@@ -41,7 +41,6 @@ export const Search = ({ dataSearch, setDataSearch, setListHouse }) => {
   };
 
   useEffect(async () => {
-    console.log(dataSearch);
     let res = await houseApi.searchHouse(dataSearch);
     console.log(res);
     if (res.code === 200) {

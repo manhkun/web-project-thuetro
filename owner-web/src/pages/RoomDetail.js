@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./RoomDetail.css";
 
-import { Button } from "../components/Button";
+import { Button } from "../components/Helpers/Button/Button";
 import Section from "../components/Section";
-import { Comment } from "../components/Comment";
+import { Comment } from "../components/Helpers/Comment/Comment";
 import { MoreInfoRoom } from "../components/MoreInfoRoom";
 import convertTime from "../helper/convertTime";
+import { price } from "../helper/convertPrice";
 import userApi from "../api/userApi";
 import houseApi from "../api/houseApi";
 
@@ -27,30 +28,18 @@ function RoomDetail() {
     "Chung cư",
   ];
 
-  useEffect(async () => {
-    let house = await houseApi.getInfoHouse(id);
-    setData(house.data);
-    let owner = await userApi.getInfoOwner(house.data.owner_id);
-    setOwner(owner.data);
-    let cmt = await houseApi.getListComment(id);
-    setListComment(cmt.data);
-    setLoading(true);
-  }, [id]);
-
-  let price = "";
-  if (loading) {
-    switch (data.unit) {
-      case 0:
-        price = data.price + "Đ/Tháng";
-        break;
-      case 1:
-        price = data.price * 3 + "Đ/Quý";
-        break;
-      case 2:
-        price = data.price * 12 + "Đ/Năm";
-        break;
-    }
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      let house = await houseApi.getInfoHouse(id);
+      setData(house.data);
+      let owner = await userApi.getInfoOwner(house.data.owner_id);
+      setOwner(owner.data);
+      let cmt = await houseApi.getListComment(id);
+      setListComment(cmt.data);
+      setLoading(true);
+    };
+    fetchData();
+  }, []);
   const handleCurImg = (e, act) => {
     e.preventDefault();
     switch (act) {
@@ -72,24 +61,18 @@ function RoomDetail() {
           }
         }
         break;
+      default:
+        return;
     }
   };
-  if (!loading) {
+  if (!loading || !owner) {
     return <p>Loading</p>;
   }
   return (
     <div className="room-detail">
       <Section>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div className="back">
-            <img src="/icons/play-button.png" alt="" />
-            <p>Trở lại</p>
-          </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <h3>NHÀ TRỌ GIÁ RẺ</h3>
-          <div className="next">
-            <p>Tin tiếp</p>
-            <img src="/icons/play-button.png" alt="" />
-          </div>
         </div>
       </Section>
       <div className="room-detail-container">
@@ -129,7 +112,7 @@ function RoomDetail() {
                 <img src="/icons/profile 1.png" alt="" />
                 <h4>{owner.owner_full_name}</h4>
               </div>
-              <Link to="">Xem trang</Link>
+              <Link to={`/profile/${owner.owner_name}`}>Xem trang</Link>
             </div>
             <MoreInfoRoom
               src="/icons/clock 1.png"
@@ -141,7 +124,7 @@ function RoomDetail() {
             </div>
 
             <p>{data.content}</p>
-            <div class="more-info-container">
+            <div className="more-info-container">
               <MoreInfoRoom
                 src="/icons/home (1).png"
                 content={`Loại phòng: ${typeHouse[data.house_type]}`}
@@ -159,10 +142,6 @@ function RoomDetail() {
                 content={`Điều hoà: ${
                   data.infrastructure.air_condition ? "Có" : "Không"
                 }`}
-              />
-              <MoreInfoRoom
-                src="/icons/bed 1.png"
-                content="Tiền cọc: 1.000.000đ"
               />
               <MoreInfoRoom
                 src="/icons/water-heater.png"

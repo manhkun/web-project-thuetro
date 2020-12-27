@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../Modal";
 import houseApi from "../../api/houseApi";
-import { FormInput } from "../FormInput";
+import { FormInput } from "../Helpers/FormInput/FormInput";
 import "./PostItem.css";
 import userApi from "../../api/userApi";
 

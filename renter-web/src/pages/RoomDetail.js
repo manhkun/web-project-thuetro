@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import "./RoomDetail.css";
 
-import { Button } from "../components/Button";
+import { Button } from "../components/Helpers/Button/Button";
 import Section from "../components/Section";
-import { FormInput } from "../components/FormInput";
-import { Comment } from "../components/Comment";
+import { FormInput } from "../components/Helpers/FormInput/FormInput";
+import { Comment } from "../components/Helpers/Comment/Comment";
 import { MoreInfoRoom } from "../components/MoreInfoRoom";
 import convertTime from "../helper/convertTime";
 import { price } from "../helper/convertPrice";
@@ -53,7 +53,7 @@ function RoomDetail() {
     let cmt = await houseApi.getListComment(id);
     setListComment(cmt.data);
     setLoading(true);
-  }, [id]);
+  }, []);
 
   const handleReport = async (e) => {
     e.preventDefault();
@@ -102,22 +102,14 @@ function RoomDetail() {
     let res = await houseApi.likeHouse(data.house_id);
     if (res.code === 200) setSaved(true);
   };
-  if (!loading) {
+  if (!loading || !owner) {
     return <p>Loading</p>;
   }
   return (
     <div className="room-detail">
       <Section>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div className="back">
-            <img src="/icons/play-button.png" alt="" />
-            <p>Trở lại</p>
-          </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <h3>NHÀ TRỌ GIÁ RẺ</h3>
-          <div className="next">
-            <p>Tin tiếp</p>
-            <img src="/icons/play-button.png" alt="" />
-          </div>
         </div>
       </Section>
       <div className="room-detail-container">
@@ -194,10 +186,6 @@ function RoomDetail() {
                 content={`Điều hoà: ${
                   data.infrastructure.air_condition ? "Có" : "Không"
                 }`}
-              />
-              <MoreInfoRoom
-                src="/icons/bed 1.png"
-                content="Tiền cọc: 1.000.000đ"
               />
               <MoreInfoRoom
                 src="/icons/water-heater.png"

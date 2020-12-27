@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./Button";
+import { Button } from "./Helpers/Button/Button";
 
 const MODAL_STYLES = {
   position: "fixed",

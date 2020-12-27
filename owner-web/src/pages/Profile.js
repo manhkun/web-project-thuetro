@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Section from "../components/Section";
-import { Button } from "../components/Button";
-import { PostItem } from "../components/PostItem";
+import { PostItem } from "../components/PostCard/PostItem";
 import userApi from "../api/userApi";
 import houseApi from "../api/houseApi";
 import { price } from "../helper/convertPrice";
@@ -16,14 +15,19 @@ function Profile() {
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(async () => {
-    let user = await userApi.getInfoOwner(id);
-    setUser(user.data);
-    let post = await houseApi.getHouseByOwnerID(id);
-    setPost(post.data);
-    setLoading(true);
-  });
-  if (!loading) {
+  useEffect(() => {
+    const fetchData = async () => {
+      let user = await userApi.getInfoOwner(id);
+      if (user.code === 200) setUser(user.data);
+      let post = await houseApi.getHouseByOwnerID(id);
+      if (post.code === 200) {
+        setPost(post.data.filter((item) => item.expired_time !== 0));
+      }
+      setLoading(true);
+    };
+    fetchData();
+  }, []);
+  if (!loading || !user) {
     return <p>Loading</p>;
   } else
     return (
@@ -36,7 +40,6 @@ function Profile() {
                 <img src="/icons/profile 1.png" alt="" />
                 <div className="name">
                   <h3>{user.owner_full_name}</h3>
-                  <Button>Chỉnh sửa</Button>
                 </div>
               </div>
             </Section>
@@ -64,7 +67,7 @@ function Profile() {
                 </div>
                 <div className="posted-count">
                   <img src="/icons/post 1.png" alt="" />
-                  <p>Bài đăng: 3 bài</p>
+                  <p>Bài đăng: {post.length} bài</p>
                 </div>
                 <div className="phone-number">
                   <img src="/icons/phone 1.png" alt="" />
@@ -75,7 +78,7 @@ function Profile() {
           </div>
         </div>
         <Section title="TIN ĐĂNG"></Section>
-        {post.map((item) => {
+        {post.map((item, key) => {
           return (
             <PostItem
               img={item.image_link[0]}
@@ -85,6 +88,7 @@ function Profile() {
               location={`${item.address.street}, ${item.address.commune}, ${item.address.district}, ${item.address.province}`}
               expired={convertTime(item.expired_time)}
               id={item.house_id}
+              key={key}
             ></PostItem>
           );
         })}

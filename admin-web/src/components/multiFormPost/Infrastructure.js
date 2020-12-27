@@ -3,7 +3,7 @@ import * as Yup from "yup";
 
 import { HeaderFormStep } from "../HeaderFormStep";
 import Section from "../Section";
-import { FormInput } from "../FormInput";
+import { FormInput } from "../Helpers/FormInput/FormInput";
 import { Button } from "../Helpers/Button/Button";
 import { useFormik } from "formik";
 

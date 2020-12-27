@@ -1,6 +1,6 @@
 import React from "react";
-import houseApi from "../api/houseApi";
-import convertTime from "../helper/convertTime";
+import houseApi from "../../../api/houseApi";
+import convertTime from "../../../helper/convertTime";
 import "./Comment.css";
 
 export const Comment = ({ data }) => {

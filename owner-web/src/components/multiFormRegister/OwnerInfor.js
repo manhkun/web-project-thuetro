@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import userApi from "../../api/userApi";
 import getData from "../../helper/DataToList";
-import { Button } from "../Button";
-import { FormInput } from "../FormInput";
+import { Button } from "../Helpers/Button/Button";
+import { FormInput } from "../Helpers/FormInput/FormInput";
 import { HeaderFormStep } from "../HeaderFormStep";
 import { Section } from "../Section";
 
-function OwnerInfor({ formData, setForm, navigation }) {
+function OwnerInfor({ formData, navigation }) {
   const idReg = /^[0-9]*$/;
   const province = getData.province();
   const districtValue = getData.district();

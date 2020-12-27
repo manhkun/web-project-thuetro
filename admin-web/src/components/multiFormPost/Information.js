@@ -3,7 +3,7 @@ import * as Yup from "yup";
 
 import { HeaderFormStep } from "../HeaderFormStep";
 import Section from "../Section";
-import { FormInput } from "../FormInput";
+import { FormInput } from "../Helpers/FormInput/FormInput";
 import { Button } from "../Helpers/Button/Button";
 import { useFormik } from "formik";
 
@@ -24,7 +24,7 @@ export const Information = ({ formData, setForm, navigation }) => {
     { code: 2, name: "Năm" },
   ];
 
-  const {handleSubmit, handleChange, errors, touched } = useFormik({
+  const { handleSubmit, handleChange, errors, touched } = useFormik({
     initialValues: {
       typeroom: "",
       numberOfRoom: "",

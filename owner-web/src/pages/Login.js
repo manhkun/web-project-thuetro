@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import userApi from "../api/userApi";
-import { Button } from "../components/Button";
-import { FormInput } from "../components/FormInput";
+import { Button } from "../components/Helpers/Button/Button";
+import { FormInput } from "../components/Helpers/FormInput/FormInput";
 import Section from "../components/Section";
 import "./Login.css";
 
 function Login() {
   const [statusLogin, setStatusLogin] = useState("");
 
-  const { values, handleSubmit, handleChange, errors, touched } = useFormik({
+  const { handleSubmit, handleChange, errors, touched } = useFormik({
     initialValues: {
       uname: "",
       password: "",

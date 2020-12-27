@@ -5,8 +5,8 @@ import * as Yup from "yup";
 import { HeaderFormStep } from "../HeaderFormStep";
 import getData from "../../helper/DataToList";
 import Section from "../Section";
-import { FormInput } from "../FormInput";
-import { Button } from "../Button";
+import { FormInput } from "../Helpers/FormInput/FormInput";
+import { Button } from "../Helpers/Button/Button";
 
 export const Address = ({ formData, setForm, navigation }) => {
   const province = getData.province();

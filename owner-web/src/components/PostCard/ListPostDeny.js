@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PostDeniedItem } from "../components/PostItem";
+import { PostDeniedItem } from "./PostItem";
 
 export const ListPostDeny = ({ data }) => {
   console.log(data);

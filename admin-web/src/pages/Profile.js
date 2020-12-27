@@ -6,7 +6,7 @@ import Section from "../components/Section";
 import { Button } from "../components/Helpers/Button/Button";
 import { PostItem } from "../components/PostManage/PostItem";
 import Modal from "../components/Modal";
-import { FormInput } from "../components/FormInput";
+import { FormInput } from "../components/Helpers/FormInput/FormInput";
 import userApi from "../api/userApi";
 import houseApi from "../api/houseApi";
 import messageApi from "../api/messageApi";
@@ -19,16 +19,19 @@ function Profile() {
   const [isOpenModalMessage, setIsOpenModalMessage] = useState(false);
   const [message, setMessage] = useState("");
 
-  useEffect(async () => {
-    try {
-      let user = await userApi.getInfoOwner(id);
-      setUser(user.data);
-      let post = await houseApi.getHouseByOwnerID(id);
-      setPost(post.data);
-      setLoading(true);
-    } catch (e) {
-      console.log(e);
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let user = await userApi.getInfoOwner(id);
+        setUser(user.data);
+        let post = await houseApi.getHouseByOwnerID(id);
+        setPost(post.data);
+        setLoading(true);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleSendMessage = async () => {

@@ -1,12 +1,12 @@
 import React from "react";
-import CardItem from "../CardItem";
+import CardItem from "../Helpers/CardItem/CardItem";
 import { price } from "../../helper/convertPrice";
 
 export const MostView = ({ data }) => {
   return (
     <div>
       <div className="grid-container">
-        {data.map((item) => {
+        {data.map((item, key) => {
           return (
             <CardItem
               houseid={item.house_id}
@@ -16,6 +16,7 @@ export const MostView = ({ data }) => {
               image={item.image_link[0]}
               like={item.like}
               view={item.view}
+              key={key}
             ></CardItem>
           );
         })}
@@ -27,7 +28,7 @@ export const MostLike = ({ data }) => {
   return (
     <div>
       <div className="grid-container">
-        {data.map((item) => {
+        {data.map((item, key) => {
           return (
             <CardItem
               houseid={item.house_id}
@@ -37,6 +38,7 @@ export const MostLike = ({ data }) => {
               image={item.image_link[0]}
               like={item.like}
               view={item.view}
+              key={key}
             ></CardItem>
           );
         })}

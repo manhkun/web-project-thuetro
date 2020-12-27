@@ -1,16 +1,16 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import { Button } from "../Button";
-import { FormInput } from "../FormInput";
+import { Button } from "../Helpers/Button/Button";
+import { FormInput } from "../Helpers/FormInput/FormInput";
 import Section from "../Section";
 
-function RegisterForm({ formData, setForm, navigation }) {
+function RegisterForm({ setForm, navigation }) {
   const userReg = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
   const phoneReg = /(03|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
 
-  const { values, handleSubmit, handleChange, errors, touched } = useFormik({
+  const { handleSubmit, handleChange, errors, touched } = useFormik({
     initialValues: {
       fname: "",
       uname: "",

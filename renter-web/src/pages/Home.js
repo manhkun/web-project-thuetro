@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 
-import CardItem from "../components/CardItem";
+import CardItem from "../components/Helpers/CardItem/CardItem";
 
 import Section from "../components/Section";
 import houseApi from "../api/houseApi";
@@ -44,7 +44,7 @@ function Home() {
       <Section title="TIN ĐĂNG DÀNH CHO BẠN">
         <div className="grid-container">
           {loading && listHouse ? (
-            listHouse.map((item) => {
+            listHouse.map((item, key) => {
               return (
                 <CardItem
                   houseid={item.house_id}
@@ -54,6 +54,7 @@ function Home() {
                   image={item.image_link[0]}
                   like={item.like}
                   view={item.view}
+                  key={key}
                 ></CardItem>
               );
             })

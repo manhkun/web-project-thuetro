@@ -2,8 +2,8 @@ import React from "react";
 
 import { HeaderFormStep } from "../HeaderFormStep";
 import Section from "../Section";
-import { FormInput } from "../FormInput";
-import { Button } from "../Button";
+import { FormInput } from "../Helpers/FormInput/FormInput";
+import { Button } from "../Helpers/Button/Button";
 import { Note } from "../Note";
 import { useFormik } from "formik";
 import * as Yup from "yup";

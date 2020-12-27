@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { HeaderFormStep } from "../HeaderFormStep";
 import Section from "../Section";
 import { Note } from "../Note";
-import { Button } from "../Button";
+import { Button } from "../Helpers/Button/Button";
 import { ImageUpload } from "../ImageUpload";
 
 export const Picture = ({ formData, setForm, navigation }) => {

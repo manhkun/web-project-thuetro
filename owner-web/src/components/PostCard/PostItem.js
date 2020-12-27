@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import houseApi from "../api/houseApi";
-import Modal from "./Modal";
-import { FormInput } from "./FormInput";
+import houseApi from "../../api/houseApi";
+import Modal from "../Modal";
+import { FormInput } from "../Helpers/FormInput/FormInput";
 import "./PostItem.css";
 
 const OptionItem = ({ src, content, onClick }) => {

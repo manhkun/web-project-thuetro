@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 
-import CardItem from "../components/CardItem";
+import CardItem from "../components/Helpers/CardItem/CardItem";
+
 import Section from "../components/Section";
 import houseApi from "../api/houseApi";
 import { price } from "../helper/convertPrice";
+import { Search } from "../components/Search";
 
 function Home() {
   const [listHouse, setListHouse] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dataSearch, setDataSearch] = useState({
+    key: "",
+    province: "",
+    district: "",
+    price: "",
+    house_type: "",
+    page: 0,
+    count: 10,
+  });
 
-  useEffect(async () => {
-    let res = await houseApi.getAllHouse();
-    setListHouse(res.data);
-    setLoading(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      let res = await houseApi.getAllHouse();
+      if (res.code === 200) {
+        setListHouse(res.data);
+        setLoading(true);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -21,11 +37,17 @@ function Home() {
       <div className="hero-container">
         <img src="image/unnamed.jpg" alt="" />
       </div>
-      <Section title="KHÁM PHÁ" size="40%"></Section>
+      <Section title="TÌM KIẾM" size="40%">
+        <Search
+          dataSearch={dataSearch}
+          setDataSearch={setDataSearch}
+          setListHouse={setListHouse}
+        ></Search>
+      </Section>
       <Section title="TIN ĐĂNG DÀNH CHO BẠN">
         <div className="grid-container">
-          {loading ? (
-            listHouse.map((item) => {
+          {loading && listHouse ? (
+            listHouse.map((item, key) => {
               return (
                 <CardItem
                   houseid={item.house_id}
@@ -35,6 +57,7 @@ function Home() {
                   image={item.image_link[0]}
                   like={item.like}
                   view={item.view}
+                  key={key}
                 ></CardItem>
               );
             })

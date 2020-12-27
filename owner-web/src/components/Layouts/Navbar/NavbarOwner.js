@@ -1,14 +1,29 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./Navbar.css";
-import { Button } from "../Helpers/Button/Button";
+import { Button } from "../../Helpers/Button/Button";
+import { logout } from "../../../actions/user";
+import userApi from "../../../api/userApi";
 
-function NavbarOwner() {
+function NavbarOwner({ currentUser }) {
+  const [clickNoti, setClickNoti] = useState(false);
   const [clickAccount, setClickAccount] = useState(false);
+  const [dataNoti, setDataNoti] = useState([]);
+
+  const handleNotiClick = async () => {
+    setClickNoti(!clickNoti);
+    if (!clickNoti) {
+      let res = await userApi.getNotification();
+      setDataNoti(res.data);
+    }
+  };
   const handleAccountClick = () => setClickAccount(!clickAccount);
+  const dispatch = useDispatch();
   const handleLogOut = () => {
     sessionStorage.clear();
+    dispatch(logout());
   };
 
   return (
@@ -38,13 +53,41 @@ function NavbarOwner() {
                   <p>Tin nhắn</p>
                 </Link>
               </li>
+              <li>
+                <div className="btn-noti" onClick={handleNotiClick}>
+                  <img src="/icons/bell 1.png" alt="" />
+                  <p>Thông báo</p>
+                </div>
+                <div
+                  className={
+                    clickNoti ? "noti-container" : "noti-container hidden"
+                  }
+                >
+                  <h3>THÔNG BÁO</h3>
+                  {dataNoti.map((item) => {
+                    return (
+                      <NotiItem
+                        src={item.house.image_link[0]}
+                        title={item.house.header}
+                        type={item.type}
+                        houseid={item.house.house_id}
+                      />
+                    );
+                  })}
+                </div>
+              </li>
             </ul>
-            <UserBtn
-              name="Admin"
-              handleAccountClick={handleAccountClick}
-              clickAccount={clickAccount}
-              handleLogOut={handleLogOut}
-            />
+            {currentUser ? (
+              <UserBtn
+                name={currentUser.owner_full_name}
+                handleAccountClick={handleAccountClick}
+                clickAccount={clickAccount}
+                handleLogOut={handleLogOut}
+                id={currentUser.owner_name}
+              />
+            ) : (
+              <LoginBtn />
+            )}
           </div>
           <div className="search-post">
             <div className="search-input">
@@ -71,6 +114,16 @@ function NavbarOwner() {
     </>
   );
 }
+
+function LoginBtn() {
+  return (
+    <Link to="/login" className="user">
+      <img src="/icons/user 1.png" alt="" />
+      <p>Đăng nhập</p>
+    </Link>
+  );
+}
+
 function UserBtn(props) {
   return (
     <div className="account-button">
@@ -86,19 +139,7 @@ function UserBtn(props) {
         <div className="view-profile-alert" onClick={props.handleAccountClick}>
           <img src="/icons/profile 1.png" alt="" />
           <h3>{props.name}</h3>
-          <p>Người quản lý</p>
-        </div>
-        <div className="save-post-alert" onClick={props.handleAccountClick}>
-          <img src="/icons/user.png" alt="" />
-          <Link to="/user-manage">Quản lý tài khoản</Link>
-        </div>
-        <div className="save-post-alert" onClick={props.handleAccountClick}>
-          <img src="/icons/post 1.png" alt="" />
-          <Link to="/post-manage">Quản lý bài đăng</Link>
-        </div>
-        <div className="save-post-alert" onClick={props.handleAccountClick}>
-          <img src="/icons/bar-chart (1).png" alt="" />
-          <Link to="/statistic">Thống kê</Link>
+          <Link to={`/profile/${props.id}`}>Xem trang cá nhân</Link>
         </div>
         <div className="logout" onClick={props.handleLogOut}>
           <img src="/icons/logout.png" alt="" />
@@ -106,6 +147,17 @@ function UserBtn(props) {
         </div>
       </div>
     </div>
+  );
+}
+
+function NotiItem(props) {
+  return (
+    <Link to={`/room-detail/${props.houseid}`} className="noti-item">
+      <img src={props.src} alt="" />
+      <p>
+        Tin <strong>{props.title}</strong> đã được duyệt thành công
+      </p>
+    </Link>
   );
 }
 

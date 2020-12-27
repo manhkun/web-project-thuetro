@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import React from "react";
 import { Button } from "../Helpers/Button/Button";
-import { FormInput } from "../FormInput";
+import { FormInput } from "../Helpers/FormInput/FormInput";
 import { HeaderFormStep } from "../HeaderFormStep";
 import { Note } from "../Note";
 import Section from "../Section";

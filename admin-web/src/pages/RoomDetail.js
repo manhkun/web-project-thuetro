@@ -5,8 +5,8 @@ import "./RoomDetail.css";
 import { Button } from "../components/Helpers/Button/Button";
 import Modal from "../components/Modal";
 import Section from "../components/Section";
-import { FormInput } from "../components/FormInput";
-import { Comment } from "../components/Comment";
+import { FormInput } from "../components/Helpers/FormInput/FormInput";
+import { Comment } from "../components/Helpers/Comment/Comment";
 import { MoreInfoRoom } from "../components/MoreInfoRoom";
 import convertTime from "../helper/convertTime";
 import { price } from "../helper/convertPrice";
@@ -37,18 +37,21 @@ function RoomDetail() {
     "Chung cư",
   ];
 
-  useEffect(async () => {
-    let house = await houseApi.getInfoHouse(id);
-    setData(house.data);
-    try {
-      let owner = await userApi.getInfoOwner(house.data.owner_id);
-      setOwner(owner.data);
-    } catch (error) {
-      console.log(error);
-    }
-    let cmt = await houseApi.getListComment(id);
-    setListComment(cmt.data);
-    setLoading(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      let house = await houseApi.getInfoHouse(id);
+      setData(house.data);
+      try {
+        let owner = await userApi.getInfoOwner(house.data.owner_id);
+        setOwner(owner.data);
+      } catch (error) {
+        console.log(error);
+      }
+      let cmt = await houseApi.getListComment(id);
+      setListComment(cmt.data);
+      setLoading(true);
+    };
+    fetchData();
   }, [id]);
   const handleCurImg = (e, act) => {
     e.preventDefault();
@@ -142,7 +145,7 @@ function RoomDetail() {
             </div>
 
             <p>{data.content}</p>
-            <div class="more-info-container">
+            <div className="more-info-container">
               <MoreInfoRoom
                 src="/icons/home (1).png"
                 content={`Loại phòng: ${typeHouse[data.house_type]}`}
@@ -288,13 +291,13 @@ function RoomDetail() {
             </div>
           </div>
           {!voteActive
-            ? listComment.map((item) => {
-                return <Comment data={item} />;
+            ? listComment.map((item, key) => {
+                return <Comment data={item} key={key} />;
               })
             : listComment
                 .filter((item) => item.star === voteActive)
-                .map((item) => {
-                  return <Comment data={item} />;
+                .map((item, key) => {
+                  return <Comment data={item} key={key} />;
                 })}
           <div className="center">
             <Modal
