@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import messageApi from "../api/messageApi";
-import HeaderChat from "../components/Helpers/Chat/HeaderChat";
-import { ListMessage } from "../components/Helpers/Chat/ListMessage";
-import UserChat from "../components/Helpers/Chat/UserChat";
+import HeaderChat from "../components/Chat/HeaderChat";
+import { ListMessage } from "../components/Chat/ListMessage";
+import UserChat from "../components/Chat/UserChat";
 import "./Chat.css";
 
 const ws = new WebSocket("ws://localhost:9999/v1/rent-house/chat/admin");

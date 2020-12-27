@@ -1,6 +1,6 @@
 import React from "react";
 import "./Message.css";
-import convertTime from "../../../helper/convertTime";
+import convertTime from "../../helper/convertTime";
 
 export const Message = ({ content, time }) => {
   return (
