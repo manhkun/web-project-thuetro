@@ -2,6 +2,12 @@ import axiosClient from "./axiosClient";
 
 const token = sessionStorage.getItem("tokenRenter");
 
+const config = {
+  headers: {
+    token: token,
+  },
+};
+
 const userApi = {
   registerRenter: (renterData) => {
     const url = "/renter/sign-up/";
@@ -13,11 +19,6 @@ const userApi = {
   },
   getInfoRenter: () => {
     const url = "/renter/";
-    let config = {
-      headers: {
-        token: token,
-      },
-    };
     return axiosClient.get(url, config);
   },
   getInfoOwner: (id) => {
@@ -26,16 +27,17 @@ const userApi = {
   },
   reportHouse: (id, title, content) => {
     const url = "/renter/report/" + id;
-    let config = {
-      headers: {
-        token: token,
-      },
-    };
+
     let body = {
       content: content,
       title: title,
     };
     return axiosClient.post(url, body, config);
+  },
+  putPassword: (password) => {
+    const url = "/renter/password";
+    let body = password;
+    return axiosClient.put(url, body, config);
   },
 };
 

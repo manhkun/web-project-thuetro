@@ -2,6 +2,12 @@ import axiosClient from "./axiosClient";
 
 const token = sessionStorage.getItem("tokenOwner");
 
+const config = {
+  headers: {
+    token: token,
+  },
+};
+
 const userApi = {
   registerRenter: (renterData) => {
     const url = "/renter/sign-up/";
@@ -31,12 +37,13 @@ const userApi = {
   },
   getNotification: () => {
     const url = "/owner/notification/";
-    let config = {
-      headers: {
-        token: token,
-      },
-    };
     return axiosClient.get(url, config);
+  },
+  putPassword: (password) => {
+    const url = "/owner/password";
+    let body = password;
+    console.log(body);
+    return axiosClient.put(url, body, config);
   },
 };
 

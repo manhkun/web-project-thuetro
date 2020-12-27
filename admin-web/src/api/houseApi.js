@@ -23,9 +23,9 @@ const houseApi = {
     const url = `/house/${id}`;
     return axiosClient.get(url);
   },
-  getAllHouse: () => {
-    const url = "/house/";
-    return axiosClient.get(url);
+  getAllHouse: (params) => {
+    const url = "/house/page";
+    return axiosClient.get(url, { params });
   },
 
   getHouseByOwnerID: (id) => {

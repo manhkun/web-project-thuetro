@@ -28,7 +28,6 @@ function Login() {
       };
       try {
         const response = await userApi.loginOwner(data);
-        console.log(response);
         if (response.code === 200) {
           sessionStorage.setItem("ownerID", data.username);
           sessionStorage.setItem("tokenOwner", response.data);

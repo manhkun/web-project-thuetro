@@ -6,6 +6,8 @@ import "./Navbar.css";
 import { Button } from "../../Helpers/Button/Button";
 import { logout } from "../../../actions/user";
 import userApi from "../../../api/userApi";
+import Modal from "../../Modal";
+import { FormInput } from "../../Helpers/FormInput/FormInput";
 
 function NavbarOwner({ currentUser }) {
   const [clickNoti, setClickNoti] = useState(false);
@@ -126,8 +128,34 @@ function LoginBtn() {
 }
 
 function UserBtn(props) {
+  const [isOpenModalPassword, setIsOpenModalPassword] = useState(false);
+
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleChangePassword = async () => {
+    let res = await userApi.putPassword(password);
+    if (res.code === 200) {
+      props.handleLogOut();
+    }
+  };
   return (
     <div className="account-button">
+      <Modal
+        open={isOpenModalPassword}
+        onClose={() => setIsOpenModalPassword(false)}
+        onClick={handleChangePassword}
+      >
+        Đổi mật khẩu
+        <FormInput
+          placeholder="Mật khẩu"
+          onChange={(e) => setPassword(e.target.value)}
+        ></FormInput>
+        <FormInput
+          placeholder="Nhập lại mật khẩu"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        ></FormInput>
+      </Modal>
       <div className="user" onClick={props.handleAccountClick}>
         <img src="/icons/user 1.png" alt="" />
         <p>{props.name}</p>
@@ -141,6 +169,10 @@ function UserBtn(props) {
           <img src="/icons/profile 1.png" alt="" />
           <h3>{props.name}</h3>
           <Link to={`/profile/${props.id}`}>Xem trang cá nhân</Link>
+        </div>
+        <div className="logout" onClick={() => setIsOpenModalPassword(true)}>
+          <img src="/icons/password 1.png" alt="" />
+          <div>Đổi mật khẩu</div>
         </div>
         <div className="logout" onClick={props.handleLogOut}>
           <img src="/icons/logout.png" alt="" />

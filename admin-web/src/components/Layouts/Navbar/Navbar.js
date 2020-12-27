@@ -3,14 +3,29 @@ import { Link } from "react-router-dom";
 
 import "./Navbar.css";
 import { Button } from "../../Helpers/Button/Button";
+import houseApi from "../../../api/houseApi";
 
 function NavbarOwner() {
   const [clickAccount, setClickAccount] = useState(false);
   const handleAccountClick = () => setClickAccount(!clickAccount);
+  const [searchKey, setSearchKey] = useState({
+    key: "",
+    province: "",
+    district: "",
+    price: "",
+    house_type: "",
+    page: 0,
+    count: 10,
+  });
   const handleLogOut = () => {
     sessionStorage.clear();
   };
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    let res = await houseApi.searchHouse(searchKey);
+    console.log(res);
+  };
   return (
     <>
       <nav className="navbar">
@@ -48,8 +63,14 @@ function NavbarOwner() {
           </div>
           <div className="search-post">
             <div className="search-input">
-              <form action="">
-                <input type="text" placeholder="Tìm kiếm..." />
+              <form action="" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                  onChange={(e) =>
+                    setSearchKey({ ...searchKey, ...{ key: e.target.value } })
+                  }
+                />
                 <button type="submit">
                   <img src="/icons/loupe 1.png" alt="" />
                 </button>

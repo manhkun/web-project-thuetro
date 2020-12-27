@@ -37,6 +37,8 @@ function PostManage({ currentUser }) {
         break;
       case "3":
         tab = <ListPostPending data={inactiveHouse}></ListPostPending>;
+        break;
+      case "4":
     }
   } else {
     tab = <p>Loading</p>;
@@ -72,6 +74,12 @@ function PostManage({ currentUser }) {
             onClick={() => setTabActive("3")}
           >
             tin chờ duyệt<span> ({inactiveHouse.length})</span>
+          </div>
+          <div
+            className={`"await-accept" ${tabActive === "4" ? "active" : ""}`}
+            onClick={() => setTabActive("4")}
+          >
+            tin đã cho thuê<span> ({inactiveHouse.length})</span>
           </div>
         </div>
       </Section>
