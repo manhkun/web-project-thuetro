@@ -20,6 +20,7 @@ export const FormInput = ({
   touched,
   listOption,
   defaultValue,
+  style,
 }) => {
   let input;
   switch (typeInput) {
@@ -30,6 +31,7 @@ export const FormInput = ({
           id=""
           onChange={onChange}
           className={error && touched ? "input-form error" : "input-form"}
+          style={style}
         >
           <option value="" disabled selected>
             {placeholder}

@@ -55,7 +55,10 @@ function RegisterForm() {
             "Đăng ký thất bại, tài khoản đã tồn tại, vui lòng chọn tài khoản khác !"
           );
         } else {
-          setStatusRegister("Đăng ký thành công !");
+          setTimeout(() => {
+            setStatusRegister("Đăng ký thành công !");
+          }, 1000);
+          window.location.href = "/login";
         }
       } catch (error) {
         console.log("Failed to register " + error);

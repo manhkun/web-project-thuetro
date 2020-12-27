@@ -3,7 +3,7 @@ import axiosClient from "./axiosClient";
 const token = sessionStorage.getItem("tokenAdmin");
 
 const houseApi = {
-  postHouse: (data, token) => {
+  postHouse: (data) => {
     const url = "/admin/house/";
     let config = {
       headers: {
@@ -41,7 +41,7 @@ const houseApi = {
     };
     return axiosClient.delete(url, config);
   },
-  editHouse: (data, token, id) => {
+  editHouse: (data, id) => {
     const url = `/house/${id}`;
     let config = {
       headers: {
@@ -151,6 +151,10 @@ const houseApi = {
       star: vote,
     };
     return axiosClient.post(url, body, config);
+  },
+  searchHouse: (params) => {
+    const url = "/search/page-search-results";
+    return axiosClient.get(url, { params });
   },
 };
 

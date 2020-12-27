@@ -52,6 +52,10 @@ const houseApi = {
     const url = `/house/${id}/comments/`;
     return axiosClient.get(url);
   },
+  searchHouse: (params) => {
+    const url = "/search/page-search-results";
+    return axiosClient.get(url, { params });
+  },
 };
 
 export default houseApi;

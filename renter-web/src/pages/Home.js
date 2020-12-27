@@ -2,32 +2,31 @@ import React, { useEffect, useState } from "react";
 import "./Home.css";
 
 import CardItem from "../components/CardItem";
-import Section from "../components/Section";
-import University from "../components/University";
-import houseApi from "../api/houseApi";
 
-let price = (data) => {
-  switch (data.unit) {
-    case 0:
-      return data.price + "Đ/Tháng";
-    case 1:
-      return data.price * 3 + "Đ/Quý";
-    case 2:
-      return data.price * 12 + "Đ/Năm";
-    default:
-      return "";
-  }
-};
+import Section from "../components/Section";
+import houseApi from "../api/houseApi";
+import { price } from "../helper/convertPrice";
+import { Search } from "../components/Search";
 
 function Home() {
   const [listHouse, setListHouse] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dataSearch, setDataSearch] = useState({
+    key: "",
+    province: "",
+    district: "",
+    price: "",
+    house_type: "",
+    page: 0,
+    count: 10,
+  });
 
   useEffect(async () => {
     let res = await houseApi.getAllHouse();
-    console.log(res);
-    setListHouse(res.data);
-    setLoading(true);
+    if (res.code === 200) {
+      setListHouse(res.data);
+      setLoading(true);
+    }
   }, []);
 
   return (
@@ -35,22 +34,16 @@ function Home() {
       <div className="hero-container">
         <img src="image/unnamed.jpg" alt="" />
       </div>
-      <Section title="KHÁM PHÁ" size="40%">
-        <ul className="list-university">
-          <li>
-            <University pathImg="/image/logoDHQG.png"></University>
-          </li>
-          <li>
-            <University pathImg="/image/logoDHQG.png"></University>
-          </li>
-          <li>
-            <University pathImg="/image/logoDHQG.png"></University>
-          </li>
-        </ul>
+      <Section title="TÌM KIẾM" size="40%">
+        <Search
+          dataSearch={dataSearch}
+          setDataSearch={setDataSearch}
+          setListHouse={setListHouse}
+        ></Search>
       </Section>
       <Section title="TIN ĐĂNG DÀNH CHO BẠN">
         <div className="grid-container">
-          {loading ? (
+          {loading && listHouse ? (
             listHouse.map((item) => {
               return (
                 <CardItem

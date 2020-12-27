@@ -1,0 +1,12 @@
+.search-address,
+.search-price,
+.search-typehouse {
+  display: flex;
+  align-items: center;
+}
+
+.search-address__select,
+.search-price__select,
+.search-typehouse__select {
+  margin-left: 10px;
+}

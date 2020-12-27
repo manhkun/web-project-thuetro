@@ -77,15 +77,14 @@ function OverView({ formData, navigation }) {
     };
     let dataHouse = { ...formData, ...img };
     if (sessionStorage.getItem("tokenAdmin")) {
-      let token = sessionStorage.getItem("tokenAdmin");
       if (id) {
-        let res = await houseApi.editHouse(dataHouse, token, id);
+        let res = await houseApi.editHouse(dataHouse, id);
         console.log(res);
         window.location.href = "/post-manage";
       } else {
         try {
-          let data = await houseApi.postHouse(dataHouse, token);
-          window.location.href = "/post-manage";
+          let res = await houseApi.postHouse(dataHouse);
+          if (res.code === 200) window.location.href = "/post-manage";
         } catch (e) {
           console.log(e);
         }

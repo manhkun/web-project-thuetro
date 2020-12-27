@@ -9,7 +9,7 @@ import "./Chat.css";
 const ws = new WebSocket("ws://localhost:9999/v1/rent-house/chat/admin");
 
 function Chat() {
-  const { id } = useParams();
+  const { id, name } = useParams();
   const [listUser, setListUser] = useState([]);
   const [message, setMessage] = useState("");
   const [listMessage, setListMessage] = useState([]);
@@ -100,48 +100,50 @@ function Chat() {
     setLoading(true);
   }, [id]);
 
-  return (
-    <div>
-      <div className="chat-container">
-        <div className="chat-container__user">
-          {listUser.map((item) => {
-            return (
-              <UserChat id={item.owner_name} name={item.owner_full_name} />
-            );
-          })}
-        </div>
-        <div className="chat-container__content">
-          <HeaderChat></HeaderChat>
-          <ListMessage data={listMessage}></ListMessage>
-          <form
-            className="chat-container__send"
-            action=""
-            onSubmit={sendMessage}
-          >
-            <label htmlFor="image_send">
-              <img
-                src="/icons/send_image.png"
-                alt=""
-                style={{ cursor: "pointer" }}
+  if (!loading) return <p>Loading</p>;
+  else
+    return (
+      <div>
+        <div className="chat-container">
+          <div className="chat-container__user">
+            {listUser.map((item) => {
+              return (
+                <UserChat id={item.owner_name} name={item.owner_full_name} />
+              );
+            })}
+          </div>
+          <div className="chat-container__content">
+            <HeaderChat id={id} name={name}></HeaderChat>
+            <ListMessage data={listMessage}></ListMessage>
+            <form
+              className="chat-container__send"
+              action=""
+              onSubmit={sendMessage}
+            >
+              <label htmlFor="image_send">
+                <img
+                  src="/icons/send_image.png"
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </label>
+              <input type="file" id="image_send" />
+              <input
+                type="text"
+                name="message"
+                id="message"
+                placeholder="Aa"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
-            </label>
-            <input type="file" id="image_send" />
-            <input
-              type="text"
-              name="message"
-              id="message"
-              placeholder="Aa"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button type="submit">
-              <img src="/icons/send.png" alt="" />
-            </button>
-          </form>
+              <button type="submit">
+                <img src="/icons/send.png" alt="" />
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
 }
 
 export default Chat;

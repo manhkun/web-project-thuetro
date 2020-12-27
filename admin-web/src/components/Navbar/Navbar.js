@@ -98,7 +98,7 @@ function UserBtn(props) {
         </div>
         <div className="save-post-alert" onClick={props.handleAccountClick}>
           <img src="/icons/bar-chart (1).png" alt="" />
-          <a href="">Thống kê</a>
+          <Link to="/statistic">Thống kê</Link>
         </div>
         <div className="logout" onClick={props.handleLogOut}>
           <img src="/icons/logout.png" alt="" />

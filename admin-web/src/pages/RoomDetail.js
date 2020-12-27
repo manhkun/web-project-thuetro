@@ -9,6 +9,7 @@ import { FormInput } from "../components/FormInput";
 import { Comment } from "../components/Comment";
 import { MoreInfoRoom } from "../components/MoreInfoRoom";
 import convertTime from "../helper/convertTime";
+import { price } from "../helper/convertPrice";
 import userApi from "../api/userApi";
 import houseApi from "../api/houseApi";
 
@@ -46,25 +47,9 @@ function RoomDetail() {
       console.log(error);
     }
     let cmt = await houseApi.getListComment(id);
-    console.log(cmt);
     setListComment(cmt.data);
     setLoading(true);
   }, [id]);
-
-  let price = "";
-  if (loading) {
-    switch (data.unit) {
-      case 0:
-        price = data.price + "Đ/Tháng";
-        break;
-      case 1:
-        price = data.price * 3 + "Đ/Quý";
-        break;
-      case 2:
-        price = data.price * 12 + "Đ/Năm";
-        break;
-    }
-  }
   const handleCurImg = (e, act) => {
     e.preventDefault();
     switch (act) {
@@ -94,16 +79,8 @@ function RoomDetail() {
   return (
     <div className="room-detail">
       <Section>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div className="back">
-            <img src="/icons/play-button.png" alt="" />
-            <p>Trở lại</p>
-          </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <h3>NHÀ TRỌ GIÁ RẺ</h3>
-          <div className="next">
-            <p>Tin tiếp</p>
-            <img src="/icons/play-button.png" alt="" />
-          </div>
         </div>
       </Section>
       <div className="room-detail-container">
@@ -183,10 +160,6 @@ function RoomDetail() {
                 content={`Điều hoà: ${
                   data.infrastructure.air_condition ? "Có" : "Không"
                 }`}
-              />
-              <MoreInfoRoom
-                src="/icons/bed 1.png"
-                content="Tiền cọc: 1.000.000đ"
               />
               <MoreInfoRoom
                 src="/icons/water-heater.png"

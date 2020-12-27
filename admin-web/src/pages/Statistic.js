@@ -2,22 +2,41 @@ import React, { useEffect, useState } from "react";
 import "./PostManage.css";
 
 import Section from "../components/Section";
-import { Chart } from "../components/Chart";
+import { ChartBar, ChartLine } from "../components/Statistic/Chart";
 import statisticApi from "../api/statisticApi";
+import { MostView, MostLike } from "../components/Statistic/MostView";
 
 function Statistic() {
   const [tabActive, setTabActive] = useState("1");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [viewInHourChart, setViewInHourChart] = useState([]);
   const [viewInDayChart, setViewInDayChart] = useState([]);
+  const [mostViewInMonth, setMostViewInMonth] = useState([]);
+  const [mostLikeInMonth, setMostLikeInMonth] = useState([]);
+  const [mostSearchPrice, setMostSearchPrice] = useState([]);
+
+  const [mostSearchPlace, setMostSearchPlace] = useState([]);
+  const [placeMostSearch, setPlaceMostSearch] = useState([]);
 
   const viewsInHour = [];
   const viewsInDay = [];
 
+  const searchPrice = [];
+  const searchPriceRange = [
+    "Duới 1Tr",
+    "Từ 1Tr - 2Tr",
+    "Từ 2Tr - 3Tr5",
+    "Từ 3Tr - 5Tr",
+    "Trên 5Tr",
+  ];
+
+  const mostSearchPlaceTemp = [];
+  const placeMostSearchTemp = [];
+
   useEffect(async () => {
-    let views = await statisticApi.viewInHour();
-    if (views.code === 200) {
-      Object.values(views.data).map((item) => {
+    let timeLine = await statisticApi.getTimeLine();
+    if (timeLine.code === 200) {
+      Object.values(timeLine.data).map((item) => {
         viewsInHour.push(Object.values(item));
         var viewInDay = Object.values(item).reduce((a, b) => a + b, 0);
         viewsInDay.push(viewInDay);
@@ -29,30 +48,75 @@ function Statistic() {
       setViewInHourChart(result);
       setViewInDayChart(viewsInDay);
     }
+    let mostView = await statisticApi.getMostView();
+    if (mostView.code === 200) {
+      setMostViewInMonth(mostView.data);
+    }
+    let mostLike = await statisticApi.getMostLike();
+    if (mostLike.code === 200) {
+      setMostLikeInMonth(mostLike.data);
+    }
+    let mostSearch = await statisticApi.getMostSearchPrice();
+    if (mostSearch.code === 200) {
+      Object.values(mostSearch.data).map((value) => {
+        searchPrice.push(value);
+      });
+      setMostSearchPrice(searchPrice);
+    }
+    let mostSearchPl = await statisticApi.getMostSearchPlace();
+    if (mostSearchPl.code === 200) {
+      mostSearchPl.data.map((item) => {
+        mostSearchPlaceTemp.push(item["number"]);
+        placeMostSearchTemp.push(item["location"]);
+      });
+      setMostSearchPlace(mostSearchPlaceTemp);
+      setPlaceMostSearch(placeMostSearchTemp);
+    }
+    setLoading(true);
   }, []);
   let tab;
   if (loading) {
     switch (tabActive) {
       case "1":
+        tab = <MostView data={mostViewInMonth}></MostView>;
         break;
       case "2":
         tab = (
           <div>
-            <Chart
+            <ChartLine
               data={viewInHourChart}
-              xAxis={Array.from(Array(23).keys())}
+              xAxis={Array.from(Array(24).keys())}
               title="Thống kê lượt xem theo giờ trong ngày"
             />{" "}
-            <Chart
+            <ChartLine
               data={viewInDayChart}
               xAxis={Array.from({ length: 30 }, (_, i) => i + 1)}
               title="Thống kê lượt xem theo ngày trong tháng"
-            ></Chart>
+            ></ChartLine>
           </div>
         );
         break;
       case "3":
-      // tab = <ListUserBlocked />;
+        tab = <MostLike data={mostLikeInMonth} />;
+        break;
+      case "4":
+        tab = (
+          <ChartBar
+            data={mostSearchPlace}
+            xAxis={placeMostSearch}
+            title={"Thống kê khu vực tìm kiếm nhiều nhất"}
+          />
+        );
+        break;
+      case "5":
+        tab = (
+          <ChartBar
+            data={mostSearchPrice}
+            xAxis={searchPriceRange}
+            title={"Thống kê lượng tìm kiếm theo khoảng giá"}
+          />
+        );
+        break;
     }
   } else {
     tab = <p>Loading</p>;

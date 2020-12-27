@@ -6,10 +6,10 @@ import Section from "../components/Section";
 import { Button } from "../components/Helpers/Button/Button";
 import { PostItem } from "../components/PostManage/PostItem";
 import Modal from "../components/Modal";
+import { FormInput } from "../components/FormInput";
 import userApi from "../api/userApi";
 import houseApi from "../api/houseApi";
-import { price } from "../helper/convertPrice";
-import convertTime from "../helper/convertTime";
+import messageApi from "../api/messageApi";
 
 function Profile() {
   const { id } = useParams();
@@ -17,6 +17,7 @@ function Profile() {
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isOpenModalMessage, setIsOpenModalMessage] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(async () => {
     try {
@@ -30,7 +31,12 @@ function Profile() {
     }
   }, []);
 
-  const handleSendMessage = () => {};
+  const handleSendMessage = async () => {
+    let res = await messageApi.sendMessage(id, message);
+    if (res.code === 200) {
+      window.location.href = `/chat/${id}/${user.owner_full_name}`;
+    }
+  };
   if (!loading || !user) {
     return <p>Loading</p>;
   } else
@@ -52,7 +58,10 @@ function Profile() {
                     onClose={() => setIsOpenModalMessage(false)}
                     onClick={handleSendMessage}
                   >
-                    Gửi tin nhắn
+                    <FormInput
+                      placeholder="Nội dung"
+                      onChange={(e) => setMessage(e.target.value)}
+                    ></FormInput>
                   </Modal>
                 </div>
               </div>
@@ -81,7 +90,7 @@ function Profile() {
                 </div>
                 <div className="posted-count">
                   <img src="/icons/post 1.png" alt="" />
-                  <p>Bài đăng: 3 bài</p>
+                  <p>Bài đăng: {post.length} bài</p>
                 </div>
                 <div className="phone-number">
                   <img src="/icons/phone 1.png" alt="" />
@@ -93,17 +102,7 @@ function Profile() {
         </div>
         <Section title="TIN ĐĂNG"></Section>
         {post.map((item) => {
-          return (
-            <PostItem
-              img={item.image_link[0]}
-              title={item.header}
-              price={price(item)}
-              time={convertTime(item.post_time)}
-              location={`${item.address.street}, ${item.address.commune}, ${item.address.district}, ${item.address.province}`}
-              expired={convertTime(item.expired_time)}
-              id={item.house_id}
-            ></PostItem>
-          );
+          return <PostItem data={item}></PostItem>;
         })}
       </div>
     );

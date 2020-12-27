@@ -89,17 +89,17 @@ export const PostedItem = ({ data }) => {
   );
 };
 
-export const PostItem = (props) => {
+export const PostItem = ({ data }) => {
   return (
     <div>
       <ItemPost
-        id={props.id}
-        src={props.img}
-        title={props.title}
-        price={props.price}
-        create_at={props.create_at}
-        location={props.location}
-        expired={props.expired}
+        id={data.house_id}
+        src={data.image_link[0]}
+        title={data.header}
+        price={price(data)}
+        create_at={convertTime(data.post_time)}
+        location={`${data.address.street}, ${data.address.commune}, ${data.address.district}, ${data.address.province}`}
+        expired={convertTime(data.expired_time)}
       />
     </div>
   );

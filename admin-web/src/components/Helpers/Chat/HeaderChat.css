@@ -1,33 +1,33 @@
 .header-chat__container {
-    width: 100%;
-    height: 60px;
+  width: 100%;
+  height: 60px;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    padding: 0 10px;
-    margin-bottom: 10px;
+  padding: 0 10px;
+  margin-bottom: 10px;
 
-    border-bottom: 0.5px solid #ccc;
+  border-bottom: 0.5px solid #ccc;
 }
 
 .header-chat__user {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .header-chat__user img {
-    max-width: 50px;
-    max-height: 50px;
+  max-width: 50px;
+  max-height: 50px;
 
-    margin-right: 20px;
+  margin-right: 20px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.header-chat__container > img {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+.header-chat__info {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
