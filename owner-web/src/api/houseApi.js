@@ -2,14 +2,15 @@ import axiosClient from "./axiosClient";
 
 const token = sessionStorage.getItem("tokenOwner");
 
+const config = {
+  headers: {
+    token: token,
+  },
+};
+
 const houseApi = {
   postHouse: (data) => {
     const url = "/owner/house/";
-    let config = {
-      headers: {
-        token: token,
-      },
-    };
     return axiosClient.post(url, data, config);
   },
 
@@ -29,24 +30,14 @@ const houseApi = {
   },
   getAllHouse: (params) => {
     const url = "/house/page";
-    return axiosClient.get(url, {params});
+    return axiosClient.get(url, { params });
   },
   deleteHouse: (id) => {
     const url = `/house/${id}`;
-    let config = {
-      headers: {
-        token: token,
-      },
-    };
     return axiosClient.delete(url, config);
   },
   editHouse: (data, id) => {
     const url = `/house/${id}`;
-    let config = {
-      headers: {
-        token: token,
-      },
-    };
     return axiosClient.put(url, data, config);
   },
   getListComment: (id) => {
@@ -55,16 +46,15 @@ const houseApi = {
   },
   expiredHouse: (id, time) => {
     const url = `/house/${id}/expired-time?time=${time}`;
-    let config = {
-      headers: {
-        token: token,
-      },
-    };
     return axiosClient.put(url, {}, config);
   },
   searchHouse: (params) => {
     const url = "/search/page-search-results";
     return axiosClient.get(url, { params });
+  },
+  updateRentedHouse: (id) => {
+    const url = `/house/${id}/rented`;
+    return axiosClient.put(url, {}, config);
   },
 };
 

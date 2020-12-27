@@ -14,15 +14,18 @@ function PostManage({ currentUser }) {
   const [activeHouse, setActiveHouse] = useState([]);
   const [deniedHouse, setDeniedHouse] = useState([]);
   const [inactiveHouse, setInactiveHouse] = useState([]);
+  const [rentedHouse, setRentedHouse] = useState([]);
 
   useEffect(async () => {
     let data = await houseApi.getHouseByOwnerID(currentUser.owner_name);
     let active = data.data.filter((item) => item.status === "activated");
     let denied = data.data.filter((item) => item.status === "denied");
     let inactived = data.data.filter((item) => item.status === "inactivated");
+    let rented = data.data.filter((item) => item.rented === true);
     setActiveHouse(active);
     setDeniedHouse(denied);
     setInactiveHouse(inactived);
+    setRentedHouse(rented);
     setLoading(true);
   }, []);
   let tab;
@@ -39,6 +42,8 @@ function PostManage({ currentUser }) {
         tab = <ListPostPending data={inactiveHouse}></ListPostPending>;
         break;
       case "4":
+        tab = <ListPostPending data={rentedHouse}></ListPostPending>;
+        break;
     }
   } else {
     tab = <p>Loading</p>;
@@ -79,7 +84,7 @@ function PostManage({ currentUser }) {
             className={`"await-accept" ${tabActive === "4" ? "active" : ""}`}
             onClick={() => setTabActive("4")}
           >
-            tin đã cho thuê<span> ({inactiveHouse.length})</span>
+            tin đã cho thuê<span> ({rentedHouse.length})</span>
           </div>
         </div>
       </Section>

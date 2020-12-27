@@ -81,8 +81,8 @@ function PostManage() {
             tin bị báo cáo<span> ({reportHouse.length})</span>
           </div>
           <div
-            className={`"await-accept" ${tabActive === "4" ? "active" : ""}`}
-            onClick={() => setTabActive("4")}
+            className={`"await-accept" ${tabActive === "5" ? "active" : ""}`}
+            onClick={() => setTabActive("5")}
           >
             tin đã cho thuê<span> ({reportHouse.length})</span>
           </div>

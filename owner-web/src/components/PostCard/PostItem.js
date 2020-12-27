@@ -4,6 +4,8 @@ import houseApi from "../../api/houseApi";
 import Modal from "../Modal";
 import { FormInput } from "../Helpers/FormInput/FormInput";
 import "./PostItem.css";
+import { price } from "../../helper/convertPrice";
+import convertTime from "../../helper/convertTime";
 
 const OptionItem = ({ src, content, onClick }) => {
   return (
@@ -16,15 +18,18 @@ const OptionItem = ({ src, content, onClick }) => {
   );
 };
 
-export const PostedItem = (props) => {
+export const PostedItem = ({ data }) => {
   const [isOpenModalRented, setIsOpenModalRented] = useState(false);
   const [isOpenModalExperied, setIsOpenModalExperied] = useState(false);
   const [timeExpired, setTimeExpired] = useState(0);
 
-  const handleRented = async () => {};
+  const handleRented = async () => {
+    let res = await houseApi.updateRentedHouse(data.house_id);
+    if (res.code === 200) window.location.reload();
+  };
 
   const handleExpired = async () => {
-    let res = await houseApi.expiredHouse(props.id, timeExpired);
+    let res = await houseApi.expiredHouse(data.house_id, timeExpired);
     console.log(res);
   };
   return (
@@ -47,22 +52,22 @@ export const PostedItem = (props) => {
         ></FormInput>
         Bạn có muốn gia hạn tin này ?
       </Modal>
-      <Link className="info-posted" to={`/room-detail/${props.id}`}>
-        <img src={props.img} alt="" />
+      <Link className="info-posted" to={`/room-detail/${data.house_id}`}>
+        <img src={data.image_link[0]} alt="" />
         <div className="info-posted-detail">
-          <p>{props.title}</p>
-          <h3>{props.price}</h3>
+          <p>{data.header}</p>
+          <h3>{price(data)}</h3>
           <div className="time">
             <img src="/icons/clock 1.png" alt="" />
-            <p>{props.time}</p>
+            <p>{convertTime(data.post_time)}</p>
           </div>
           <div className="location">
             <img src="/icons/pin 1.png" alt="" />
-            <p>{props.location}</p>
+            <p>{`${data.address.street}, ${data.address.commune}, ${data.address.district}, ${data.address.province}`}</p>
           </div>
           <div className="time">
             <img src="/icons/queue.png" alt="" />
-            <p>{props.expired}</p>
+            <p>{convertTime(data.expired_time)}</p>
           </div>
         </div>
       </Link>

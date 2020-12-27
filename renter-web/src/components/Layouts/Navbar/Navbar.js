@@ -41,12 +41,6 @@ function Navbar({ currentUser }) {
                   <p>Tin đã lưu</p>
                 </Link>
               </li>
-              <li>
-                <Link className="btn-noti" onClick={handleNotiClick}>
-                  <img src="/icons/bell 1.png" alt="" />
-                  <p>Thông báo</p>
-                </Link>
-              </li>
             </ul>
             {currentUser.renter_full_name ? (
               <UserBtn
