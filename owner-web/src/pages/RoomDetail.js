@@ -118,6 +118,12 @@ function RoomDetail() {
               src="/icons/clock 1.png"
               content={`Thời gian đăng: ${convertTime(data.post_time)}`}
             />
+            <MoreInfoRoom
+              src="/icons/charging-circle 1.png"
+              content={`Tình trạng: ${
+                data.rented ? "Đã cho thuê" : "Chưa cho thuê"
+              }`}
+            />
             <div className="location-room">
               <img src="/icons/pin 1.png" alt="" />
               <p>{`${data.address.commune}, ${data.address.district}, ${data.address.province}`}</p>

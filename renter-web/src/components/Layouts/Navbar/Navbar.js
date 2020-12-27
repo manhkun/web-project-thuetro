@@ -27,7 +27,7 @@ function Navbar({ currentUser }) {
             </Link>
             <ul>
               <li>
-                <Link>
+                <Link to="/">
                   <img src="/icons/home 1.png" alt="" />
                   <p>Trang chủ</p>
                 </Link>

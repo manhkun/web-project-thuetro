@@ -22,9 +22,14 @@ function Home() {
     count: 10,
   });
 
+  const [params, setParams] = useState({
+    page: 0,
+    count: 10,
+  });
+
   useEffect(() => {
     const fetchData = async () => {
-      let res = await houseApi.getAllHouse();
+      let res = await houseApi.getAllHouse(params);
       if (res.code === 200) {
         setListHouse(res.data);
         setLoading(true);
