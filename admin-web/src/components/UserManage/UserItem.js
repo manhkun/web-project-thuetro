@@ -79,7 +79,7 @@ export const UserPending = (props) => {
           <OptionItem
             src="/icons/plus 2.png"
             content="Từ chối"
-            onClick={props.handleDeny}
+            onClick={() => setIsOpenModalDeny(true)}
           />
         </div>
       </div>
